@@ -1399,8 +1399,59 @@
     if (e.target === this) fermerConfig();
   });
 
+  // ── URL Apps Script ──
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwaeAmpLEWN180RsSTQyY7_0E4RpygN-2qcfZbGyJPfZ5Eo7yvvpj9cj2CJhfhZy_vEdg/exec';
+
+  // ── Indicateur de sync ──
+  function afficherSyncStatus(msg, couleur) {
+    let el = document.getElementById('sync-status');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'sync-status';
+      el.style.cssText = 'position:fixed;bottom:82px;right:24px;background:white;border:1px solid #e2e6ed;border-radius:8px;padding:7px 14px;font-size:12px;font-family:DM Sans,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.1);z-index:499;transition:opacity 0.3s;';
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.style.color = couleur || '#6b7280';
+    el.style.opacity = '1';
+    clearTimeout(el._timer);
+    el._timer = setTimeout(() => { el.style.opacity = '0'; }, 4000);
+  }
+
+  // ── Synchronisation depuis Google Sheets ──
+  async function syncDepuisSheets() {
+    afficherSyncStatus('🔄 Synchronisation...', '#1A3A6B');
+    try {
+      const resp = await fetch(APPS_SCRIPT_URL);
+      if (!resp.ok) throw new Error('Erreur réseau');
+      const json = await resp.json();
+      const data = {
+        stagiaires: json.nbStagiaires || (json.stagiaires && json.stagiaires.length) || 0,
+        jours: json.jours || 71,
+        hcentre: json.hCentre || '530h',
+        hentreprise: json.hEntreprise || '245h',
+        datedebut: json.datedebut || '8 juin 2026',
+        datefin: json.datefin || '27 nov. 2026',
+        statut: json.statut || 'En cours',
+        sessions: json.sessions || 3,
+        banniere: json.banniere || '',
+        listeStagiaires: (json.stagiaires || []).map(function(s) {
+          return { nom: s.nom, initiales: s.initiales, debut: s.debut, formation: s.formation || 'MSADS / CCP3 FPA' };
+        })
+      };
+      sauvegarderDonnees(data);
+      appliquerDonnees(data);
+      afficherSyncStatus('✅ Synchronisé · ' + (json.lastUpdate || ''), '#059669');
+    } catch(e) {
+      appliquerDonnees(chargerDonnees());
+      afficherSyncStatus('⚠️ Mode hors-ligne — données locales', '#E87722');
+    }
+  }
+
   // ── Initialisation ──
+  // Affichage immédiat des données locales, puis sync Sheets en arrière-plan
   appliquerDonnees(chargerDonnees());
+  syncDepuisSheets();
 </script>
 </body>
 </html>
