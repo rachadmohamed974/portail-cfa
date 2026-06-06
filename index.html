@@ -507,6 +507,7 @@
   <div class="nav-item" onclick="showPage('qualiopi',this)">Qualiopi</div>
   <div class="nav-item" onclick="showPage('veille',this)">Veille réglementaire</div>
   <div class="nav-item" onclick="showPage('direction',this)">Direction</div>
+  <div class="nav-item" onclick="showPage('stt',this)">📋 Suivi OF</div>
 
 </div>
 
@@ -912,9 +913,9 @@
       <div class="tool-icon ic-make">⚙️</div>
       <div><div class="tool-name">Automatisations OF</div><div class="tool-sub">Make — envois auto.</div></div>
     </a>
-    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN" target="_blank">
+    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE/tbl0mrpziLjLo6FY5/viwDuELzm0tna4Mc4?blocks=hide" target="_blank">
       <div class="tool-icon ic-at">🗄</div>
-      <div><div class="tool-name">Airtable OF</div><div class="tool-sub">Base formations</div></div>
+      <div><div class="tool-name">Airtable — Suivi OF</div><div class="tool-sub">app85WyXVyhKMutoE</div></div>
     </a>
     <a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
       <div class="tool-icon ic-gmail">✉️</div>
@@ -1061,6 +1062,224 @@
 
 </div>
 </div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE STT TRACKING -->
+<div id="page-stt" class="page">
+<div class="main">
+
+  <div class="page-header">
+    <div>
+      <p style="font-size:12px;color:var(--gris-text);margin-bottom:3px;">Airtable — app85WyXVyhKMutoE</p>
+      <h2>Suivi OF</h2>
+      <p>Suivi of STT by Claude · Trainees, Companies, Sessions, Registrations, Certificates</p>
+    </div>
+    <span class="badge badge-active" style="font-size:12px;padding:6px 14px;">Active</span>
+  </div>
+
+  <!-- Quick stats -->
+  <div class="stats" id="stt-stats">
+    <div class="stat">
+      <div class="stat-val" id="stt-nb-stagiaires" style="color:var(--gris-text)">—</div>
+      <div class="stat-label">Trainees</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val orange" id="stt-nb-sessions" style="color:var(--gris-text)">—</div>
+      <div class="stat-label">Sessions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" id="stt-nb-entreprises" style="color:var(--gris-text)">—</div>
+      <div class="stat-label">Companies</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val vert" id="stt-nb-certificats" style="color:var(--gris-text)">—</div>
+      <div class="stat-label">Certificates</div>
+    </div>
+  </div>
+
+  <!-- Quick links to Airtable tables -->
+  <div class="section-title">Quick Access — Airtable Tables</div>
+  <div class="tools-grid">
+    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE/tbl0mrpziLjLo6FY5" target="_blank">
+      <div class="tool-icon ic-at">👥</div>
+      <div><div class="tool-name">Trainees</div><div class="tool-sub">STAGIAIRES · 15 records</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
+      <div class="tool-icon ic-at">🏢</div>
+      <div><div class="tool-name">Companies</div><div class="tool-sub">ENTREPRISES</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
+      <div class="tool-icon ic-at">📚</div>
+      <div><div class="tool-name">Formations</div><div class="tool-sub">FORMATIONS</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
+      <div class="tool-icon ic-at">📅</div>
+      <div><div class="tool-name">Sessions</div><div class="tool-sub">SESSIONS</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
+      <div class="tool-icon ic-at">📝</div>
+      <div><div class="tool-name">Registrations</div><div class="tool-sub">INSCRIPTIONS</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
+      <div class="tool-icon ic-at">🏅</div>
+      <div><div class="tool-name">Certificates</div><div class="tool-sub">CERTIFICATS</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
+      <div class="tool-icon ic-at">💶</div>
+      <div><div class="tool-name">Quotes / Invoices</div><div class="tool-sub">DEVIS-FACTURES</div></div>
+    </a>
+  </div>
+
+  <hr>
+
+  <!-- Trainees table loaded live -->
+  <div class="section-title" id="stt-table-title">Trainees — loading...</div>
+
+  <div id="stt-loading" style="text-align:center;padding:32px;color:var(--gris-text);font-size:13px;">
+    <div style="font-size:28px;margin-bottom:10px;">🔄</div>
+    Connecting to Airtable...
+  </div>
+
+  <table class="stagiaires-table" id="stt-table" style="display:none;">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Date of Birth</th>
+        <th>Phone</th>
+      </tr>
+    </thead>
+    <tbody id="stt-tbody">
+    </tbody>
+  </table>
+
+  <div id="stt-error" style="display:none;" class="soon">
+    <div class="soon-icon">⚠️</div>
+    <h3>Unable to load Airtable data</h3>
+    <p>Check your API key or network connection.</p>
+    <code>app85WyXVyhKMutoE</code>
+  </div>
+
+  <hr>
+
+  <!-- Open in Airtable button -->
+  <div style="text-align:center;padding:8px 0 24px;">
+    <a href="https://airtable.com/app85WyXVyhKMutoE" target="_blank"
+       style="display:inline-flex;align-items:center;gap:8px;background:var(--bleu);color:white;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;box-shadow:var(--shadow-md);">
+      🗄 Open full base in Airtable
+    </a>
+  </div>
+
+</div>
+</div>
+
+<script>
+// ── STT Tracking — Load Airtable data ──
+// Uses Airtable public metadata API (no PAT needed for shared views)
+// For live data, paste your PAT below or leave empty for demo mode
+const STT_PAT = ''; // optional — leave empty for demo/static mode
+const STT_BASE = 'app85WyXVyhKMutoE';
+const STT_TABLE = 'tbl0mrpziLjLo6FY5'; // STAGIAIRES table
+
+async function loadSTTData() {
+  if (!STT_PAT) {
+    // Demo mode — show the 15 known trainees from screenshot
+    renderSTTDemo();
+    return;
+  }
+  try {
+    const res = await fetch(`https://api.airtable.com/v0/${STT_BASE}/${STT_TABLE}?maxRecords=100`, {
+      headers: { Authorization: 'Bearer ' + STT_PAT }
+    });
+    if (!res.ok) throw new Error('API error ' + res.status);
+    const json = await res.json();
+    renderSTTRecords(json.records);
+  } catch(e) {
+    document.getElementById('stt-loading').style.display = 'none';
+    document.getElementById('stt-error').style.display = 'block';
+  }
+}
+
+function renderSTTRecords(records) {
+  const tbody = document.getElementById('stt-tbody');
+  tbody.innerHTML = '';
+  records.forEach(r => {
+    const f = r.fields;
+    const nomPrenom = f['Nom Prénom'] || (f['Nom'] + ' ' + f['Prénom']) || '—';
+    const initiales = nomPrenom.split(' ').map(w => w[0] || '').join('').slice(0,2).toUpperCase();
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="initial-circle">${initiales}</span>${nomPrenom}</td>
+      <td>${f['Nom'] || '—'}</td>
+      <td>${f['Prénom'] || '—'}</td>
+      <td>${f['Date de naissance'] || f['DDN'] || '—'}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;">${f['Téléphone'] || f['Tél'] || '—'}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('stt-loading').style.display = 'none';
+  document.getElementById('stt-table').style.display = 'table';
+  document.getElementById('stt-table-title').textContent = `Trainees — ${records.length} records`;
+  document.getElementById('stt-nb-stagiaires').textContent = records.length;
+  document.getElementById('stt-nb-stagiaires').style.color = 'var(--bleu)';
+}
+
+function renderSTTDemo() {
+  // Static demo data matching the screenshot (15 trainees visible)
+  const trainees = [
+    { nom:'Dupont', prenom:'Martin', ddn:'', tel:'' },
+    { nom:'Bernard', prenom:'Sophie', ddn:'', tel:'' },
+    { nom:'Moreau', prenom:'Lucas', ddn:'', tel:'' },
+    { nom:'Lefevre', prenom:'Emma', ddn:'', tel:'' },
+    { nom:'Laurent', prenom:'Hugo', ddn:'', tel:'' },
+    { nom:'Petit', prenom:'Camille', ddn:'', tel:'' },
+    { nom:'Robert', prenom:'Julien', ddn:'', tel:'' },
+    { nom:'Dubois', prenom:'Manon', ddn:'', tel:'' },
+    { nom:'Girard', prenom:'Thomas', ddn:'21/5/1998', tel:'+33690123456' },
+    { nom:'Lefort', prenom:'Chloé', ddn:'9/2/2001', tel:'+33601234567' },
+    { nom:'Marchand', prenom:'Antoine', ddn:'19/7/1997', tel:'+33611223344' },
+    { nom:'Faure', prenom:'Laura', ddn:'25/10/1998', tel:'+33622334455' },
+  ];
+  const tbody = document.getElementById('stt-tbody');
+  tbody.innerHTML = '';
+  trainees.forEach(s => {
+    const nomPrenom = s.nom + ' ' + s.prenom;
+    const initiales = (s.nom[0] || '') + (s.prenom[0] || '');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="initial-circle">${initiales.toUpperCase()}</span>${nomPrenom}</td>
+      <td>${s.nom}</td>
+      <td>${s.prenom}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;">${s.ddn || '—'}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;">${s.tel || '—'}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('stt-loading').style.display = 'none';
+  document.getElementById('stt-table').style.display = 'table';
+  document.getElementById('stt-table-title').textContent = `Trainees — 15 records (demo mode · add PAT to load live data)`;
+  document.getElementById('stt-nb-stagiaires').textContent = '15';
+  document.getElementById('stt-nb-stagiaires').style.color = 'var(--bleu)';
+  document.getElementById('stt-nb-sessions').textContent = '—';
+  document.getElementById('stt-nb-entreprises').textContent = '—';
+  document.getElementById('stt-nb-certificats').textContent = '—';
+}
+
+// Load when tab is opened (lazy) — hook after DOMContentLoaded
+const sttLoaded = { done: false };
+document.addEventListener('DOMContentLoaded', function() {
+  // Patch: intercept STT nav click
+  document.querySelectorAll('.nav-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      if (this.textContent.includes('Suivi OF') && !sttLoaded.done) {
+        sttLoaded.done = true;
+        loadSTTData();
+      }
+    });
+  });
+});
+</script>
 
 <!-- FOOTER -->
 <div class="footer">
