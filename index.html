@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portail CFA RUNIXO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #1A3A6B;
+    --bleu-clair: #2352a0;
+    --bleu-pale: #e8f0fb;
+    --orange: #E87722;
+    --orange-pale: #fff3e8;
+    --gris-bg: #f5f6f8;
+    --gris-card: #ffffff;
+    --gris-border: #e2e6ed;
+    --gris-text: #6b7280;
+    --gris-dark: #374151;
+    --texte: #111827;
+    --vert: #059669;
+    --vert-pale: #ecfdf5;
+    --rouge: #dc2626;
+    --rouge-pale: #fef2f2;
+    --radius: 10px;
+    --radius-lg: 14px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gris-bg);
+    color: var(--texte);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* ─── TOPBAR ─── */
+  .topbar {
+    background: var(--bleu);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(26,58,107,0.3);
+  }
+  .topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-logo {
+    width: 34px; height: 34px;
+    background: var(--orange);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: white;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+  .brand-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.01em;
+  }
+  .brand-sep { color: rgba(255,255,255,0.3); margin: 0 2px; }
+  .brand-sub { color: rgba(255,255,255,0.6); font-weight: 300; font-size: 14px; }
+  .topbar-right {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .topbar-date {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    font-family: 'DM Mono', monospace;
+  }
+  .topbar-user {
+    display: flex; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+  }
+  .user-avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: white;
+  }
+
+  /* ─── NAV ─── */
+  .nav {
+    background: #142d57;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    padding: 0 24px;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-item {
+    padding: 12px 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    user-select: none;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  .nav-item:hover { color: rgba(255,255,255,0.85); }
+  .nav-item.active {
+    color: white;
+    border-bottom-color: var(--orange);
+    font-weight: 500;
+  }
+  .nav-badge {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 6px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  /* ─── LAYOUT ─── */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 24px 48px;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ─── SECTION TITLE ─── */
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gris-text);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 24px 0 12px;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  /* ─── BANNER ─── */
+  .banner {
+    background: var(--bleu);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .banner h1 { font-size: 18px; font-weight: 600; color: white; margin-bottom: 4px; }
+  .banner p { font-size: 13px; color: rgba(255,255,255,0.65); }
+  .banner-pill {
+    background: var(--orange);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .banner-pill.green { background: var(--vert); }
+
+  /* ─── STAT CARDS ─── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 700px) { .stats { grid-template-columns: repeat(2,1fr); } }
+  .stat {
+    background: white;
+    border: 1px solid var(--gris-border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+  .stat-val {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--bleu);
+    font-family: 'DM Mono', monospace;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-val.orange { color: var(--orange); }
+  .stat-val.vert { color: var(--vert); }
+  .stat-label {
+    font-size: 11px;
+    color: var(--gris-text);
+    font-weight: 400;
+  }
+
+  /* ─── TOOL CARDS ─── */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+  .tool-card {
+    background: white;
+    border: 1px solid var(--gris-border);
+    border-radius: var(--radius);
+    padding: 14px;
+    text-decoration: none;
+    color: var(--texte);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    cursor: pointer;
+  }
+  .tool-card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    border-color: #c5d3e8;
+  }
+  .tool-icon {
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .tool-name { font-size: 13px; font-weight: 500; color: var(--texte); line-height: 1.3; }
+  .tool-sub { font-size: 11px; color: var(--gris-text); margin-top: 2px; line-height: 1.4; }
+
+  /* icon colors */
+  .ic-sheets { background: #e8f5e9; }
+  .ic-drive  { background: #e3f2fd; }
+  .ic-at     { background: #fce4ec; }
+  .ic-agenda { background: #fff8e1; }
+  .ic-gmail  { background: #fce4ec; }
+  .ic-make   { background: #ede7f6; }
+  .ic-docs   { background: #e8f0fe; }
+  .ic-forms  { background: #e0f7fa; }
+  .ic-brevo  { background: #e8f5e9; }
+  .ic-sites  { background: #f3e5f5; }
+
+  /* ─── SESSION CARD ─── */
+  .session {
+    background: white;
+    border: 1px solid var(--gris-border);
+    border-left: 3px solid var(--bleu);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+  }
+  .session.orange { border-left-color: var(--orange); }
+  .session-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .session-name { font-size: 15px; font-weight: 600; color: var(--texte); }
+  .session-meta {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    font-size: 12px; color: var(--gris-text);
+    margin-bottom: 12px;
+  }
+  .session-meta span { display: flex; align-items: center; gap: 4px; }
+  .session-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .slink {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 11px;
+    border-radius: 6px;
+    border: 1px solid var(--gris-border);
+    background: var(--gris-bg);
+    color: var(--gris-dark);
+    text-decoration: none;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .slink:hover { background: #e8edf5; border-color: #b8c8de; }
+
+  /* ─── BADGE ─── */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .badge-active { background: var(--vert-pale); color: var(--vert); }
+  .badge-prep   { background: var(--orange-pale); color: var(--orange); }
+  .badge-plan   { background: var(--bleu-pale); color: var(--bleu); }
+  .badge-warn   { background: var(--rouge-pale); color: var(--rouge); }
+
+  /* ─── DIVIDER ─── */
+  hr { border: none; border-top: 1px solid var(--gris-border); margin: 20px 0; }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+  .page-header h2 { font-size: 20px; font-weight: 600; }
+  .page-header p { font-size: 13px; color: var(--gris-text); margin-top: 2px; }
+
+  /* ─── DOC ROW ─── */
+  .doc-row {
+    background: white;
+    border: 1px solid var(--gris-border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+    margin-bottom: 8px;
+  }
+  .doc-row-left {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 500; color: var(--texte);
+  }
+  .doc-icon {
+    width: 30px; height: 30px;
+    border-radius: 7px;
+    background: var(--bleu-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  /* ─── CERT ROW ─── */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .cert-card {
+    background: white;
+    border: 1px solid var(--gris-border);
+    border-radius: var(--radius);
+    padding: 14px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .cert-title { font-size: 14px; font-weight: 600; color: var(--bleu); margin-bottom: 4px; }
+  .cert-sub { font-size: 11px; color: var(--gris-text); }
+
+  /* ─── STAGIAIRE TABLE ─── */
+  .stagiaires-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gris-border);
+    margin-bottom: 20px;
+  }
+  .stagiaires-table th {
+    background: var(--gris-bg);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gris-text);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--gris-border);
+  }
+  .stagiaires-table td {
+    padding: 11px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid #f0f2f5;
+    vertical-align: middle;
+  }
+  .stagiaires-table tr:last-child td { border-bottom: none; }
+  .stagiaires-table tr:hover td { background: #fafbfc; }
+  .initial-circle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--bleu-pale);
+    color: var(--bleu);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  /* ─── SOON BOX ─── */
+  .soon {
+    background: white;
+    border: 1px solid var(--gris-border);
+    border-radius: var(--radius-lg);
+    padding: 40px 24px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .soon-icon { font-size: 40px; margin-bottom: 12px; }
+  .soon h3 { font-size: 16px; font-weight: 600; color: var(--texte); margin-bottom: 6px; }
+  .soon p { font-size: 13px; color: var(--gris-text); line-height: 1.6; }
+  .soon code {
+    display: inline-block;
+    margin-top: 10px;
+    background: var(--gris-bg);
+    border: 1px solid var(--gris-border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--bleu);
+  }
+
+  /* ─── PLANNING RAPIDE ─── */
+  .planning-month {
+    background: white;
+    border: 1px solid var(--gris-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+  }
+  .planning-month-header {
+    background: var(--bleu-pale);
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .planning-month-name { font-size: 13px; font-weight: 600; color: var(--bleu); }
+  .planning-month-stats { font-size: 12px; color: var(--gris-text); display: flex; gap: 12px; }
+  .planning-month-body { padding: 12px 16px; }
+  .progress-bar-wrap { background: #f0f2f5; border-radius: 4px; height: 6px; overflow: hidden; margin-top: 6px; }
+  .progress-bar { height: 100%; border-radius: 4px; }
+  .bar-centre { background: var(--bleu); }
+  .bar-entreprise { background: var(--orange); }
+  .bar-legend { display: flex; gap: 14px; margin-top: 8px; }
+  .bar-legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--gris-text); }
+  .bar-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--gris-text);
+    padding: 16px 24px;
+    border-top: 1px solid var(--gris-border);
+    background: white;
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-logo">CFA</div>
+    <div>
+      <span class="brand-name">Portail CFA RUNIXO</span>
+      <span class="brand-sep"> · </span>
+      <span class="brand-sub">3AIM CFA</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-date" id="date-now">—</div>
+    <div class="topbar-user">
+      <div class="user-avatar">RM</div>
+      Rachad M.
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-item active" onclick="showPage('accueil',this)">🏠 Accueil</div>
+  <div class="nav-item" onclick="showPage('msads',this)">MSADS 2026 <span class="nav-badge">J+1</span></div>
+  <div class="nav-item" onclick="showPage('amis',this)">TP AMIS 2026</div>
+  <div class="nav-item" onclick="showPage('courtes',this)">Formations courtes</div>
+  <div class="nav-item" onclick="showPage('qualiopi',this)">Qualiopi</div>
+  <div class="nav-item" onclick="showPage('veille',this)">Veille réglementaire</div>
+  <div class="nav-item" onclick="showPage('direction',this)">Direction</div>
+  <div class="nav-item" onclick="showPage('runixo',this)">RUNIXO Contrôle</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE ACCUEIL -->
+<div id="page-accueil" class="page active">
+<div class="main">
+
+  <div class="banner">
+    <div>
+      <h1>Bonjour Rachad 👋</h1>
+      <p>Démarrage MSADS demain — 8 juin 2026 · 9 stagiaires · 3 certifications</p>
+    </div>
+    <div class="banner-pill">⚡ J-1 MSADS</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-val">9</div>
+      <div class="stat-label">Apprenants actifs</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val orange">3</div>
+      <div class="stat-label">Sessions en cours</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">71</div>
+      <div class="stat-label">Jours MSADS</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val vert">530h</div>
+      <div class="stat-label">Heures centre MSADS</div>
+    </div>
+  </div>
+
+  <div class="section-title">Sessions actives</div>
+
+  <div class="session">
+    <div class="session-header">
+      <span class="session-name">MSADS 2026</span>
+      <span class="badge badge-active">Démarre demain</span>
+    </div>
+    <div class="session-meta">
+      <span>📅 8 juin – 27 nov. 2026</span>
+      <span>👥 9 apprenants</span>
+      <span>⏱ 530h centre · 245h entreprise</span>
+      <span>🏫 3 centres · 3 certifications</span>
+    </div>
+    <div class="session-links">
+      <a class="slink" href="https://docs.google.com/spreadsheets/d/1Br82lRuPj5fhBeEIrBeHgLNKTm3jFE0s5IfYQqa-8bE/edit" target="_blank">📊 Planning</a>
+      <a class="slink" href="https://docs.google.com/spreadsheets/d/167Up7WEjTr-2mCWLt0yrK-jkuhzdBhld97Wt8ICslGQ/edit" target="_blank">📋 Accompagnement</a>
+      <a class="slink" href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/viwS31g6Uovqx0f59?blocks=hide" target="_blank">🗄 Airtable</a>
+      <a class="slink" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">📁 Drive</a>
+      <a class="slink" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank">⚙️ Make</a>
+    </div>
+  </div>
+
+  <div class="session orange">
+    <div class="session-header">
+      <span class="session-name">TP AMIS 2026</span>
+      <span class="badge badge-prep">En préparation</span>
+    </div>
+    <div class="session-meta">
+      <span>📅 Dates à définir</span>
+      <span>👥 — apprenants</span>
+    </div>
+    <div class="session-links">
+      <a class="slink" href="#" onclick="showPage('amis', document.querySelectorAll('.nav-item')[2]); return false;">→ Ouvrir la page AMIS</a>
+    </div>
+  </div>
+
+  <hr>
+  <div class="section-title">Accès rapide outils</div>
+  <div class="tools-grid">
+    <a class="tool-card" href="https://docs.google.com/spreadsheets/d/1Br82lRuPj5fhBeEIrBeHgLNKTm3jFE0s5IfYQqa-8bE/edit" target="_blank">
+      <div class="tool-icon ic-sheets">📊</div>
+      <div><div class="tool-name">Planning MSADS</div><div class="tool-sub">Google Sheets</div></div>
+    </a>
+    <a class="tool-card" href="https://docs.google.com/spreadsheets/d/167Up7WEjTr-2mCWLt0yrK-jkuhzdBhld97Wt8ICslGQ/edit" target="_blank">
+      <div class="tool-icon ic-sheets">📋</div>
+      <div><div class="tool-name">Accompagnement</div><div class="tool-sub">Google Sheets</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/viwS31g6Uovqx0f59?blocks=hide" target="_blank">
+      <div class="tool-icon ic-at">🗄</div>
+      <div><div class="tool-name">Airtable CFA</div><div class="tool-sub">Base apprenants</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-drive">📁</div>
+      <div><div class="tool-name">Google Drive</div><div class="tool-sub">Dossiers sessions</div></div>
+    </a>
+    <a class="tool-card" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank">
+      <div class="tool-icon ic-make">⚙️</div>
+      <div><div class="tool-name">Make</div><div class="tool-sub">Scénarios auto.</div></div>
+    </a>
+    <a class="tool-card" href="https://calendar.google.com" target="_blank">
+      <div class="tool-icon ic-agenda">📅</div>
+      <div><div class="tool-name">Google Agenda</div><div class="tool-sub">Planning RDV</div></div>
+    </a>
+    <a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+      <div class="tool-icon ic-gmail">✉️</div>
+      <div><div class="tool-name">Gmail</div><div class="tool-sub">contact@3aim.fr</div></div>
+    </a>
+    <a class="tool-card" href="https://app.brevo.com" target="_blank">
+      <div class="tool-icon ic-brevo">📨</div>
+      <div><div class="tool-name">Brevo</div><div class="tool-sub">Envois emails</div></div>
+    </a>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE MSADS -->
+<div id="page-msads" class="page">
+<div class="main">
+
+  <div class="page-header">
+    <div>
+      <p style="font-size:12px;color:var(--gris-text);margin-bottom:3px;">Session en cours</p>
+      <h2>MSADS 2026</h2>
+      <p>Médiateur Social Accès aux Droits et aux Services · TP-00398</p>
+    </div>
+    <span class="badge badge-active" style="font-size:12px;padding:6px 14px;">8 juin → 27 nov. 2026</span>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val">9</div><div class="stat-label">Stagiaires</div></div>
+    <div class="stat"><div class="stat-val">71</div><div class="stat-label">Jours de formation</div></div>
+    <div class="stat"><div class="stat-val orange">530h</div><div class="stat-label">Heures centre</div></div>
+    <div class="stat"><div class="stat-val">245h</div><div class="stat-label">Heures entreprise</div></div>
+  </div>
+
+  <div class="cert-grid">
+    <div class="cert-card">
+      <div class="cert-title">MSADS</div>
+      <div class="cert-sub">3AIM CFA</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-title">CIP</div>
+      <div class="cert-sub">EF SARL EXIMUS</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-title">AMIS</div>
+      <div class="cert-sub">FCA REUNION</div>
+    </div>
+  </div>
+
+  <div class="section-title">Outils de la session</div>
+  <div class="tools-grid">
+    <a class="tool-card" href="https://docs.google.com/spreadsheets/d/1Br82lRuPj5fhBeEIrBeHgLNKTm3jFE0s5IfYQqa-8bE/edit" target="_blank">
+      <div class="tool-icon ic-sheets">📊</div>
+      <div><div class="tool-name">Planning MSADS</div><div class="tool-sub">Juin – Nov. 2026 · 775h</div></div>
+    </a>
+    <a class="tool-card" href="https://docs.google.com/spreadsheets/d/167Up7WEjTr-2mCWLt0yrK-jkuhzdBhld97Wt8ICslGQ/edit" target="_blank">
+      <div class="tool-icon ic-sheets">📋</div>
+      <div><div class="tool-name">Suivi accompagnement</div><div class="tool-sub">4 stagiaires · 52 entretiens</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/viwS31g6Uovqx0f59?blocks=hide" target="_blank">
+      <div class="tool-icon ic-at">🗄</div>
+      <div><div class="tool-name">Airtable — Dossiers</div><div class="tool-sub">appQjS0otb8VrzUxN</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-drive">📁</div>
+      <div><div class="tool-name">Drive stagiaires</div><div class="tool-sub">2026/MSADS/STAGIAIRES/</div></div>
+    </a>
+    <a class="tool-card" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank">
+      <div class="tool-icon ic-make">⚙️</div>
+      <div><div class="tool-name">Make — Scénario 6018789</div><div class="tool-sub">Génération documents auto.</div></div>
+    </a>
+    <a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+      <div class="tool-icon ic-gmail">✉️</div>
+      <div><div class="tool-name">Gmail</div><div class="tool-sub">contact@3aim.fr</div></div>
+    </a>
+  </div>
+
+  <hr>
+  <div class="section-title">Stagiaires — 4 enregistrés (données test)</div>
+  <table class="stagiaires-table">
+    <thead>
+      <tr>
+        <th>Nom prénom</th>
+        <th>Démarrage</th>
+        <th>Formation</th>
+        <th>Statut</th>
+        <th>Entretiens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="initial-circle">BA</span>BAO Ambulahi</td>
+        <td>08/06/2026</td>
+        <td>MSADS / CCP3 FPA</td>
+        <td><span class="badge badge-active">En cours</span></td>
+        <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gris-text)">0 / 13</td>
+      </tr>
+      <tr>
+        <td><span class="initial-circle">BE</span>BOYER Elodie</td>
+        <td>08/06/2026</td>
+        <td>MSADS / CCP3 FPA</td>
+        <td><span class="badge badge-active">En cours</span></td>
+        <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gris-text)">0 / 13</td>
+      </tr>
+      <tr>
+        <td><span class="initial-circle">TM</span>TANDRAYEN Marie</td>
+        <td>08/06/2026</td>
+        <td>MSADS / CCP3 FPA</td>
+        <td><span class="badge badge-active">En cours</span></td>
+        <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gris-text)">0 / 13</td>
+      </tr>
+      <tr>
+        <td><span class="initial-circle">MM</span>MANORO Marie Stéphania</td>
+        <td>08/06/2026</td>
+        <td>MSADS / CCP3 FPA</td>
+        <td><span class="badge badge-active">En cours</span></td>
+        <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gris-text)">0 / 13</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Récapitulatif planning mensuel</div>
+  <div class="planning-month">
+    <div class="planning-month-header">
+      <span class="planning-month-name">Juin 2026</span>
+      <div class="planning-month-stats"><span>105h centre</span><span>0h entreprise</span><span>17 jours</span></div>
+    </div>
+    <div class="planning-month-body">
+      <div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:100%"></div></div>
+      <div class="bar-legend">
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 100%</div>
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--orange)"></div>Entreprise 0%</div>
+      </div>
+    </div>
+  </div>
+  <div class="planning-month">
+    <div class="planning-month-header">
+      <span class="planning-month-name">Juillet 2026</span>
+      <div class="planning-month-stats"><span>68h centre</span><span>70h entreprise</span><span>23 jours</span></div>
+    </div>
+    <div class="planning-month-body">
+      <div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:49%"></div></div>
+      <div class="bar-legend">
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 49%</div>
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--orange)"></div>Entreprise 51%</div>
+      </div>
+    </div>
+  </div>
+  <div class="planning-month">
+    <div class="planning-month-header">
+      <span class="planning-month-name">Août 2026</span>
+      <div class="planning-month-stats"><span>90h centre</span><span>42h entreprise</span><span>21 jours</span></div>
+    </div>
+    <div class="planning-month-body">
+      <div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:68%"></div></div>
+      <div class="bar-legend">
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 68%</div>
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--orange)"></div>Entreprise 32%</div>
+      </div>
+    </div>
+  </div>
+  <div class="planning-month">
+    <div class="planning-month-header">
+      <span class="planning-month-name">Septembre 2026</span>
+      <div class="planning-month-stats"><span>90h centre</span><span>49h entreprise</span><span>22 jours</span></div>
+    </div>
+    <div class="planning-month-body">
+      <div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:65%"></div></div>
+      <div class="bar-legend">
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 65%</div>
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--orange)"></div>Entreprise 35%</div>
+      </div>
+    </div>
+  </div>
+  <div class="planning-month">
+    <div class="planning-month-header">
+      <span class="planning-month-name">Octobre 2026</span>
+      <div class="planning-month-stats"><span>60h centre</span><span>84h entreprise</span><span>22 jours</span></div>
+    </div>
+    <div class="planning-month-body">
+      <div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:42%"></div></div>
+      <div class="bar-legend">
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 42%</div>
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--orange)"></div>Entreprise 58%</div>
+      </div>
+    </div>
+  </div>
+  <div class="planning-month">
+    <div class="planning-month-header">
+      <span class="planning-month-name">Novembre 2026</span>
+      <div class="planning-month-stats"><span>117h centre</span><span>0h entreprise</span><span>20 jours</span></div>
+    </div>
+    <div class="planning-month-body">
+      <div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:100%"></div></div>
+      <div class="bar-legend">
+        <div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 100% — Examen 23/11</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE AMIS -->
+<div id="page-amis" class="page">
+<div class="main">
+
+  <div class="page-header">
+    <div>
+      <p style="font-size:12px;color:var(--gris-text);margin-bottom:3px;">Session</p>
+      <h2>TP AMIS 2026</h2>
+      <p>Assistant de Milieu de Vie et d'Intégration Sociale</p>
+    </div>
+    <span class="badge badge-prep" style="font-size:12px;padding:6px 14px;">En préparation</span>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val" style="color:var(--gris-text)">—</div><div class="stat-label">Apprenants inscrits</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--gris-text)">—</div><div class="stat-label">Date de démarrage</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--gris-text)">—</div><div class="stat-label">Heures centre</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--gris-text)">—</div><div class="stat-label">Heures entreprise</div></div>
+  </div>
+
+  <div class="section-title">Outils de la session</div>
+  <div class="tools-grid">
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-sheets">📊</div>
+      <div><div class="tool-name">Planning AMIS</div><div class="tool-sub">À créer</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-sheets">📋</div>
+      <div><div class="tool-name">Suivi accompagnement</div><div class="tool-sub">À créer</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/viwS31g6Uovqx0f59?blocks=hide" target="_blank">
+      <div class="tool-icon ic-at">🗄</div>
+      <div><div class="tool-name">Base apprenants</div><div class="tool-sub">Airtable CFA</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-drive">📁</div>
+      <div><div class="tool-name">Dossier Drive AMIS</div><div class="tool-sub">À créer</div></div>
+    </a>
+    <a class="tool-card" href="https://calendar.google.com" target="_blank">
+      <div class="tool-icon ic-agenda">📅</div>
+      <div><div class="tool-name">Google Agenda</div><div class="tool-sub">Calendrier formation</div></div>
+    </a>
+    <a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+      <div class="tool-icon ic-gmail">✉️</div>
+      <div><div class="tool-name">Gmail / Brevo</div><div class="tool-sub">Communications apprenants</div></div>
+    </a>
+  </div>
+
+  <hr>
+  <div class="section-title">Documents de la session</div>
+  <div class="doc-row">
+    <div class="doc-row-left"><div class="doc-icon">📄</div>Programme de formation AMIS</div>
+    <a class="slink" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">📁 Ouvrir Drive</a>
+  </div>
+  <div class="doc-row">
+    <div class="doc-row-left"><div class="doc-icon">📄</div>Règlement intérieur</div>
+    <a class="slink" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">📁 Ouvrir Drive</a>
+  </div>
+  <div class="doc-row">
+    <div class="doc-row-left"><div class="doc-icon">📄</div>Livret stagiaire</div>
+    <a class="slink" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">📁 Ouvrir Drive</a>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE FORMATIONS COURTES -->
+<div id="page-courtes" class="page">
+<div class="main">
+
+  <div class="page-header">
+    <div>
+      <h2>Formations courtes — OF</h2>
+      <p>3AIM OF · Organisme de formation continue</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val">19</div><div class="stat-label">Formations actives</div></div>
+    <div class="stat"><div class="stat-val orange">Auto</div><div class="stat-label">Envoi questionnaire 16h00</div></div>
+    <div class="stat"><div class="stat-val">J+1</div><div class="stat-label">Relance 09h00</div></div>
+    <div class="stat"><div class="stat-val vert">4</div><div class="stat-label">Triggers actifs Apps Script</div></div>
+  </div>
+
+  <div class="section-title">Outils</div>
+  <div class="tools-grid">
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-sheets">📊</div>
+      <div><div class="tool-name">Sheet Pilote OF</div><div class="tool-sub">19 formations continues</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-forms">📝</div>
+      <div><div class="tool-name">Formulaire universel</div><div class="tool-sub">Inscription stagiaires</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-drive">📁</div>
+      <div><div class="tool-name">Programmes PDF</div><div class="tool-sub">17+ programmes formation</div></div>
+    </a>
+    <a class="tool-card" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank">
+      <div class="tool-icon ic-make">⚙️</div>
+      <div><div class="tool-name">Automatisations OF</div><div class="tool-sub">Make — envois auto.</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN" target="_blank">
+      <div class="tool-icon ic-at">🗄</div>
+      <div><div class="tool-name">Airtable OF</div><div class="tool-sub">Base formations</div></div>
+    </a>
+    <a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+      <div class="tool-icon ic-gmail">✉️</div>
+      <div><div class="tool-name">Gmail</div><div class="tool-sub">contact@3aim.fr</div></div>
+    </a>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE QUALIOPI -->
+<div id="page-qualiopi" class="page">
+<div class="main">
+
+  <div class="page-header">
+    <div>
+      <h2>Qualiopi</h2>
+      <p>Certification qualité · 3AIM CFA · SIRET 937 988 905 00017</p>
+    </div>
+    <span class="badge badge-active" style="font-size:12px;padding:6px 14px;">✅ Certifié</span>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val vert">7</div><div class="stat-label">Critères couverts</div></div>
+    <div class="stat"><div class="stat-val">32</div><div class="stat-label">Preuves générées</div></div>
+    <div class="stat"><div class="stat-val">15</div><div class="stat-label">Tables Airtable</div></div>
+    <div class="stat"><div class="stat-val orange">NDA</div><div class="stat-label">04973634297</div></div>
+  </div>
+
+  <div class="section-title">Accès rapide</div>
+  <div class="tools-grid">
+    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN" target="_blank">
+      <div class="tool-icon ic-at">🗄</div>
+      <div><div class="tool-name">Base Qualiopi</div><div class="tool-sub">15 tables interconnectées</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-drive">📁</div>
+      <div><div class="tool-name">Drive — Preuves</div><div class="tool-sub">Critères 1 à 7</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-docs">📄</div>
+      <div><div class="tool-name">Documents Qualiopi</div><div class="tool-sub">32 preuves PDF</div></div>
+    </a>
+  </div>
+
+  <hr>
+  <div class="section-title">Référents Qualiopi — 3AIM CFA</div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">👤</div>Référent Qualiopi</div><span style="font-size:13px;font-weight:500;color:var(--bleu)">MOHAMED Rachad</span></div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">♿</div>Référent Handicap</div><span style="font-size:13px;font-weight:500;color:var(--bleu)">MOHAMED Rachad</span></div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">🧭</div>Référent Mobilité</div><span style="font-size:13px;font-weight:500;color:var(--bleu)">MOHAMED Rachad</span></div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">📈</div>Conseil d'Amélioration</div><span style="font-size:13px;font-weight:500;color:var(--bleu)">MOHAMED Rachad</span></div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE VEILLE -->
+<div id="page-veille" class="page">
+<div class="main">
+
+  <div class="page-header">
+    <div>
+      <h2>Veille réglementaire</h2>
+      <p>Surveillance automatique · 21 formations · Rapport mensuel automatique</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val">21</div><div class="stat-label">Formations surveillées</div></div>
+    <div class="stat"><div class="stat-val orange">Auto</div><div class="stat-label">Rapport mensuel Drive</div></div>
+    <div class="stat"><div class="stat-val">5820105</div><div class="stat-label">Scénario Make</div></div>
+    <div class="stat"><div class="stat-val vert">Actif</div><div class="stat-label">Surveillance en cours</div></div>
+  </div>
+
+  <div class="section-title">Outils</div>
+  <div class="tools-grid">
+    <a class="tool-card" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank">
+      <div class="tool-icon ic-make">⚙️</div>
+      <div><div class="tool-name">Scénario 5820105</div><div class="tool-sub">Veille automatique Make</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-drive">📁</div>
+      <div><div class="tool-name">Rapports Drive</div><div class="tool-sub">Dossier veille réglementaire</div></div>
+    </a>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE DIRECTION -->
+<div id="page-direction" class="page">
+<div class="main">
+
+  <div class="page-header">
+    <div>
+      <h2>Direction</h2>
+      <p>3AIM CFA + 3AIM OF · Saint-André, La Réunion</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val">3AIM</div><div class="stat-label">CFA + OF</div></div>
+    <div class="stat"><div class="stat-val vert">Qualiopi</div><div class="stat-label">Certifié</div></div>
+    <div class="stat"><div class="stat-val">1</div><div class="stat-label">Formateur (Rachad M.)</div></div>
+    <div class="stat"><div class="stat-val orange">FPA</div><div class="stat-label">Certification en cours</div></div>
+  </div>
+
+  <div class="section-title">Informations légales</div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">🏢</div>Raison sociale</div><span style="font-size:13px;color:var(--gris-dark)">3AIM CFA</span></div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">🔢</div>SIRET</div><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--gris-dark)">937 988 905 00017</span></div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">📋</div>NDA</div><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--gris-dark)">04973634297</span></div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">📍</div>Adresse</div><span style="font-size:13px;color:var(--gris-dark)">109 Lotissement les Lilas, 97440 Saint-André</span></div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">✉️</div>Email principal</div><span style="font-size:13px;color:var(--bleu)">contact@3aim.fr</span></div>
+
+  <div class="section-title" style="margin-top:24px;">Outils direction</div>
+  <div class="tools-grid">
+    <a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+      <div class="tool-icon ic-gmail">✉️</div>
+      <div><div class="tool-name">Gmail</div><div class="tool-sub">contact@3aim.fr</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-drive">📁</div>
+      <div><div class="tool-name">Google Drive</div><div class="tool-sub">Racine 3AIM</div></div>
+    </a>
+    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN" target="_blank">
+      <div class="tool-icon ic-at">🗄</div>
+      <div><div class="tool-name">Airtable CFA</div><div class="tool-sub">Vue complète</div></div>
+    </a>
+    <a class="tool-card" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank">
+      <div class="tool-icon ic-make">⚙️</div>
+      <div><div class="tool-name">Make</div><div class="tool-sub">Tous scénarios</div></div>
+    </a>
+    <a class="tool-card" href="https://calendar.google.com" target="_blank">
+      <div class="tool-icon ic-agenda">📅</div>
+      <div><div class="tool-name">Google Agenda</div><div class="tool-sub">Planification</div></div>
+    </a>
+    <a class="tool-card" href="https://app.brevo.com" target="_blank">
+      <div class="tool-icon ic-brevo">📨</div>
+      <div><div class="tool-name">Brevo</div><div class="tool-sub">Campagnes emails</div></div>
+    </a>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE RUNIXO CONTRÔLE -->
+<div id="page-runixo" class="page">
+<div class="main">
+
+  <div class="page-header">
+    <div>
+      <h2>RUNIXO Contrôle</h2>
+      <p>Vérifications Générales Périodiques · RCS 988 171 740</p>
+    </div>
+    <span class="badge badge-plan" style="font-size:12px;padding:6px 14px;">VGP BTP & Levage</span>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val">VGP</div><div class="stat-label">Vérifications périodiques</div></div>
+    <div class="stat"><div class="stat-val orange">Auto</div><div class="stat-label">PDF + Email client</div></div>
+    <div class="stat"><div class="stat-val">5853315</div><div class="stat-label">Pipeline Make actif</div></div>
+    <div class="stat"><div class="stat-val vert">IPRP</div><div class="stat-label">Rachad Mohamed</div></div>
+  </div>
+
+  <div class="section-title">Outils RUNIXO Contrôle</div>
+  <div class="tools-grid">
+    <a class="tool-card" href="https://airtable.com/app6P7WcsZYBScpZu" target="_blank">
+      <div class="tool-icon ic-at">🗄</div>
+      <div><div class="tool-name">Base VGP</div><div class="tool-sub">Clients · Engins · Rapports</div></div>
+    </a>
+    <a class="tool-card" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank">
+      <div class="tool-icon ic-make">⚙️</div>
+      <div><div class="tool-name">Pipeline VGP — 5853315</div><div class="tool-sub">Génération PDF auto.</div></div>
+    </a>
+    <a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+      <div class="tool-icon ic-gmail">✉️</div>
+      <div><div class="tool-name">Gmail</div><div class="tool-sub">Envoi rapports clients</div></div>
+    </a>
+    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
+      <div class="tool-icon ic-drive">📁</div>
+      <div><div class="tool-name">Drive RUNIXO</div><div class="tool-sub">Rapports PDF clients</div></div>
+    </a>
+  </div>
+
+  <hr>
+  <div class="section-title">Tables Airtable — TOTAL CGV</div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">👥</div>Clients</div><span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gris-text)">tblWKsc8aoUDwNT41</span></div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">🚧</div>Engins</div><span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gris-text)">tblfEPzrpla60Bm6K</span></div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">📋</div>VGP / Rapports</div><span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gris-text)">tbluBT6iWBcKnocDx</span></div>
+  <div class="doc-row"><div class="doc-row-left"><div class="doc-icon">🔗</div>Lignes de contrôle</div><span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gris-text)">tblIh5lGiTohi3M3e</span></div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Portail CFA RUNIXO · 3AIM CFA · SIRET 937 988 905 00017 · NDA 04973634297 · contact@3aim.fr · Saint-André, La Réunion
+  &nbsp;·&nbsp;
+  <a href="#" onclick="ouvrirConfig(); return false;" style="color:var(--bleu);text-decoration:none;font-weight:500;">⚙️ Mettre à jour les données</a>
+</div>
+
+<!-- PANNEAU DE CONFIGURATION -->
+<div id="overlay-config" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:white;border-radius:16px;padding:28px 28px 24px;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <div>
+        <div style="font-size:17px;font-weight:600;color:#111827;">⚙️ Mise à jour du portail</div>
+        <div style="font-size:12px;color:#6b7280;margin-top:2px;">Les modifications sont sauvegardées automatiquement</div>
+      </div>
+      <button onclick="fermerConfig()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#6b7280;padding:4px 8px;border-radius:6px;">✕</button>
+    </div>
+
+    <!-- SECTION MSADS -->
+    <div style="background:#f5f6f8;border-radius:10px;padding:16px;margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:600;color:#1A3A6B;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">MSADS 2026</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <label style="font-size:11px;color:#6b7280;display:block;margin-bottom:4px;">Nombre de stagiaires</label>
+          <input id="cfg-stagiaires" type="number" min="0" max="50" style="width:100%;padding:8px 10px;border:1px solid #e2e6ed;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;">
+        </div>
+        <div>
+          <label style="font-size:11px;color:#6b7280;display:block;margin-bottom:4px;">Nombre de jours</label>
+          <input id="cfg-jours" type="number" min="0" max="300" style="width:100%;padding:8px 10px;border:1px solid #e2e6ed;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;">
+        </div>
+        <div>
+          <label style="font-size:11px;color:#6b7280;display:block;margin-bottom:4px;">Heures centre</label>
+          <input id="cfg-hcentre" type="text" style="width:100%;padding:8px 10px;border:1px solid #e2e6ed;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;">
+        </div>
+        <div>
+          <label style="font-size:11px;color:#6b7280;display:block;margin-bottom:4px;">Heures entreprise</label>
+          <input id="cfg-hentreprise" type="text" style="width:100%;padding:8px 10px;border:1px solid #e2e6ed;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;">
+        </div>
+        <div>
+          <label style="font-size:11px;color:#6b7280;display:block;margin-bottom:4px;">Date début</label>
+          <input id="cfg-datedebut" type="text" placeholder="ex: 8 juin 2026" style="width:100%;padding:8px 10px;border:1px solid #e2e6ed;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;">
+        </div>
+        <div>
+          <label style="font-size:11px;color:#6b7280;display:block;margin-bottom:4px;">Date fin</label>
+          <input id="cfg-datefin" type="text" placeholder="ex: 27 nov. 2026" style="width:100%;padding:8px 10px;border:1px solid #e2e6ed;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;">
+        </div>
+        <div style="grid-column:1/-1;">
+          <label style="font-size:11px;color:#6b7280;display:block;margin-bottom:4px;">Statut de la session</label>
+          <select id="cfg-statut" style="width:100%;padding:8px 10px;border:1px solid #e2e6ed;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;background:white;">
+            <option value="Démarre demain">⚡ Démarre demain</option>
+            <option value="En cours">✅ En cours</option>
+            <option value="En préparation">🟡 En préparation</option>
+            <option value="Terminée">🔴 Terminée</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION SESSIONS -->
+    <div style="background:#f5f6f8;border-radius:10px;padding:16px;margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:600;color:#1A3A6B;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Sessions actives (accueil)</div>
+      <div>
+        <label style="font-size:11px;color:#6b7280;display:block;margin-bottom:4px;">Nombre de sessions en cours</label>
+        <input id="cfg-sessions" type="number" min="0" max="20" style="width:100%;padding:8px 10px;border:1px solid #e2e6ed;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;">
+      </div>
+      <div style="margin-top:10px;">
+        <label style="font-size:11px;color:#6b7280;display:block;margin-bottom:4px;">Message bannière accueil</label>
+        <input id="cfg-banniere" type="text" placeholder="ex: Démarrage MSADS demain — 8 juin 2026" style="width:100%;padding:8px 10px;border:1px solid #e2e6ed;border-radius:7px;font-size:14px;font-family:'DM Sans',sans-serif;">
+      </div>
+    </div>
+
+    <!-- SECTION STAGIAIRES -->
+    <div style="background:#f5f6f8;border-radius:10px;padding:16px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:600;color:#1A3A6B;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Liste des stagiaires MSADS</div>
+      <div id="cfg-liste-stagiaires" style="display:flex;flex-direction:column;gap:8px;"></div>
+      <button onclick="ajouterStagiaire()" style="margin-top:10px;background:none;border:1px dashed #b8c8de;border-radius:7px;padding:7px 14px;font-size:12px;color:#1A3A6B;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;">+ Ajouter un stagiaire</button>
+    </div>
+
+    <!-- BOUTONS -->
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="fermerConfig()" style="padding:9px 20px;border:1px solid #e2e6ed;border-radius:8px;background:white;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;color:#374151;">Annuler</button>
+      <button onclick="sauvegarder()" style="padding:9px 20px;border:none;border-radius:8px;background:#1A3A6B;color:white;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">✓ Sauvegarder</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- BOUTON FLOTTANT -->
+<button onclick="ouvrirConfig()" title="Mettre à jour les données" style="position:fixed;bottom:24px;right:24px;width:48px;height:48px;border-radius:50%;background:#1A3A6B;border:none;color:white;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(26,58,107,0.35);z-index:500;transition:transform 0.15s;">⚙️</button>
+
+<script>
+  // ── Date dynamique ──
+  const d = new Date();
+  const jours = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const mois = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  document.getElementById('date-now').textContent =
+    jours[d.getDay()] + ' ' + d.getDate() + ' ' + mois[d.getMonth()] + ' ' + d.getFullYear();
+
+  // ── Navigation ──
+  function showPage(id, tabEl) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+    const page = document.getElementById('page-' + id);
+    if (page) page.classList.add('active');
+    if (tabEl) tabEl.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // ── Données par défaut ──
+  const DEFAULTS = {
+    stagiaires: 4,
+    jours: 71,
+    hcentre: '530h',
+    hentreprise: '245h',
+    datedebut: '8 juin 2026',
+    datefin: '27 nov. 2026',
+    statut: 'Démarre demain',
+    sessions: 3,
+    banniere: 'Démarrage MSADS demain — 8 juin 2026 · 3 certifications',
+    listeStagiaires: [
+      { nom: 'BAO Ambulahi', initiales: 'BA', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' },
+      { nom: 'BOYER Elodie', initiales: 'BE', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' },
+      { nom: 'TANDRAYEN Marie', initiales: 'TM', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' },
+      { nom: 'MANORO Marie Stéphania', initiales: 'MM', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' }
+    ]
+  };
+
+  // ── Charger données sauvegardées ──
+  function chargerDonnees() {
+    try {
+      const s = localStorage.getItem('portail_cfa_data');
+      return s ? JSON.parse(s) : { ...DEFAULTS };
+    } catch(e) { return { ...DEFAULTS }; }
+  }
+
+  function sauvegarderDonnees(data) {
+    try { localStorage.setItem('portail_cfa_data', JSON.stringify(data)); } catch(e) {}
+  }
+
+  // ── Appliquer les données à la page ──
+  function appliquerDonnees(data) {
+    // Stats accueil
+    const vals = document.querySelectorAll('.stat-val');
+    if (vals[0]) vals[0].textContent = data.stagiaires;
+    if (vals[1]) vals[1].textContent = data.sessions;
+    if (vals[2]) vals[2].textContent = data.jours;
+    if (vals[3]) vals[3].textContent = data.hcentre;
+
+    // Stats MSADS (page MSADS)
+    const msadsVals = document.querySelectorAll('#page-msads .stat-val');
+    if (msadsVals[0]) msadsVals[0].textContent = data.stagiaires;
+    if (msadsVals[1]) msadsVals[1].textContent = data.jours;
+    if (msadsVals[2]) msadsVals[2].textContent = data.hcentre;
+    if (msadsVals[3]) msadsVals[3].textContent = data.hentreprise;
+
+    // Bannière accueil
+    const bannieres = document.querySelectorAll('.banner p');
+    if (bannieres[0]) bannieres[0].textContent = data.banniere;
+
+    // Badge MSADS dans session accueil
+    const badges = document.querySelectorAll('.session .badge-active');
+    if (badges[0]) badges[0].textContent = data.statut;
+
+    // Période dans page header MSADS
+    const periodeEl = document.querySelector('#page-msads .page-header .badge');
+    if (periodeEl) periodeEl.textContent = data.datedebut + ' → ' + data.datefin;
+
+    // Tableau stagiaires
+    const tbody = document.querySelector('.stagiaires-table tbody');
+    if (tbody) {
+      tbody.innerHTML = '';
+      (data.listeStagiaires || []).forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="initial-circle">${s.initiales}</span>${s.nom}</td>
+          <td>${s.debut}</td>
+          <td>${s.formation}</td>
+          <td><span class="badge badge-active">En cours</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gris-text)">0 / 13</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Titre section stagiaires
+    const titreStag = document.querySelector('#page-msads .section-title');
+    if (titreStag) titreStag.textContent = `Stagiaires — ${(data.listeStagiaires||[]).length} enregistrés`;
+  }
+
+  // ── Ouvrir panneau config ──
+  function ouvrirConfig() {
+    const data = chargerDonnees();
+    document.getElementById('cfg-stagiaires').value = data.stagiaires;
+    document.getElementById('cfg-jours').value = data.jours;
+    document.getElementById('cfg-hcentre').value = data.hcentre;
+    document.getElementById('cfg-hentreprise').value = data.hentreprise;
+    document.getElementById('cfg-datedebut').value = data.datedebut;
+    document.getElementById('cfg-datefin').value = data.datefin;
+    document.getElementById('cfg-statut').value = data.statut;
+    document.getElementById('cfg-sessions').value = data.sessions;
+    document.getElementById('cfg-banniere').value = data.banniere;
+
+    // Remplir liste stagiaires
+    const container = document.getElementById('cfg-liste-stagiaires');
+    container.innerHTML = '';
+    (data.listeStagiaires || []).forEach((s, i) => ajouterLigneStagiaire(s, i));
+
+    const overlay = document.getElementById('overlay-config');
+    overlay.style.display = 'flex';
+  }
+
+  function fermerConfig() {
+    document.getElementById('overlay-config').style.display = 'none';
+  }
+
+  // ── Stagiaires dans le formulaire ──
+  function ajouterLigneStagiaire(s, i) {
+    const container = document.getElementById('cfg-liste-stagiaires');
+    const div = document.createElement('div');
+    div.style.cssText = 'display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:6px;align-items:center;';
+    div.innerHTML = `
+      <input placeholder="Nom Prénom" value="${s ? s.nom : ''}" class="stag-nom" style="padding:7px 9px;border:1px solid #e2e6ed;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;">
+      <input placeholder="Initiales" value="${s ? s.initiales : ''}" class="stag-init" maxlength="3" style="padding:7px 9px;border:1px solid #e2e6ed;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;text-transform:uppercase;">
+      <input placeholder="Date début" value="${s ? s.debut : '08/06/2026'}" class="stag-debut" style="padding:7px 9px;border:1px solid #e2e6ed;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;">
+      <button onclick="this.parentElement.remove()" style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:7px 10px;cursor:pointer;font-size:13px;color:#dc2626;">✕</button>
+    `;
+    container.appendChild(div);
+  }
+
+  function ajouterStagiaire() {
+    ajouterLigneStagiaire(null);
+  }
+
+  // ── Sauvegarder ──
+  function sauvegarder() {
+    const lignes = document.querySelectorAll('#cfg-liste-stagiaires > div');
+    const listeStagiaires = [];
+    lignes.forEach(div => {
+      const nom = div.querySelector('.stag-nom').value.trim();
+      const initiales = div.querySelector('.stag-init').value.trim().toUpperCase();
+      const debut = div.querySelector('.stag-debut').value.trim();
+      if (nom) listeStagiaires.push({
+        nom,
+        initiales: initiales || nom.split(' ').map(w=>w[0]).join('').slice(0,2),
+        debut,
+        formation: 'MSADS / CCP3 FPA'
+      });
+    });
+
+    const data = {
+      stagiaires: parseInt(document.getElementById('cfg-stagiaires').value) || 0,
+      jours: parseInt(document.getElementById('cfg-jours').value) || 0,
+      hcentre: document.getElementById('cfg-hcentre').value.trim(),
+      hentreprise: document.getElementById('cfg-hentreprise').value.trim(),
+      datedebut: document.getElementById('cfg-datedebut').value.trim(),
+      datefin: document.getElementById('cfg-datefin').value.trim(),
+      statut: document.getElementById('cfg-statut').value,
+      sessions: parseInt(document.getElementById('cfg-sessions').value) || 0,
+      banniere: document.getElementById('cfg-banniere').value.trim(),
+      listeStagiaires
+    };
+
+    sauvegarderDonnees(data);
+    appliquerDonnees(data);
+    fermerConfig();
+
+    // Feedback visuel
+    const btn = document.querySelector('[onclick="ouvrirConfig()"]');
+    if (btn) {
+      btn.textContent = '✓';
+      btn.style.background = '#059669';
+      setTimeout(() => { btn.textContent = '⚙️'; btn.style.background = '#1A3A6B'; }, 2000);
+    }
+  }
+
+  // ── Fermer overlay en cliquant dehors ──
+  document.getElementById('overlay-config').addEventListener('click', function(e) {
+    if (e.target === this) fermerConfig();
+  });
+
+  // ── Initialisation ──
+  appliquerDonnees(chargerDonnees());
+</script>
+</body>
+</html>
