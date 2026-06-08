@@ -498,17 +498,15 @@
   </div>
 </div>
 
-<!-- NAV -->
+<!-- NAV — TP AMIS et Suivi OF supprimés -->
 <div class="nav">
   <div class="nav-item active" onclick="showPage('accueil',this)">🏠 Accueil</div>
   <div class="nav-item" onclick="showPage('msads',this)">MSADS 2026 <span class="nav-badge">J+1</span></div>
-  <div class="nav-item" onclick="showPage('amis',this)">TP AMIS 2026</div>
   <div class="nav-item" onclick="showPage('courtes',this)">Formations courtes</div>
   <div class="nav-item" onclick="showPage('qualiopi',this)">Qualiopi</div>
   <div class="nav-item" onclick="showPage('veille',this)">Veille réglementaire</div>
   <div class="nav-item" onclick="showPage('direction',this)">Direction</div>
-  <div class="nav-item" onclick="showPage('stt',this)">📋 Suivi OF</div>
-
+  <div class="nav-item" onclick="showPage('stagiaires',this)">👥 Stagiaires</div>
 </div>
 
 <!-- ══════════════════════════════════════════════════ -->
@@ -519,41 +517,42 @@
   <div class="banner">
     <div>
       <h1>Bonjour Rachad 👋</h1>
-      <p>Démarrage MSADS demain — 8 juin 2026 · 9 stagiaires · 3 certifications</p>
+      <p id="banniere-text">Démarrage MSADS demain — 8 juin 2026 · 3 certifications</p>
     </div>
     <div class="banner-pill">⚡ J-1 MSADS</div>
   </div>
 
   <div class="stats">
     <div class="stat">
-      <div class="stat-val">9</div>
+      <div class="stat-val" id="stat-apprenants">9</div>
       <div class="stat-label">Apprenants actifs</div>
     </div>
     <div class="stat">
-      <div class="stat-val orange">3</div>
+      <div class="stat-val orange" id="stat-sessions">1</div>
       <div class="stat-label">Sessions en cours</div>
     </div>
     <div class="stat">
-      <div class="stat-val">71</div>
+      <div class="stat-val" id="stat-jours">71</div>
       <div class="stat-label">Jours MSADS</div>
     </div>
     <div class="stat">
-      <div class="stat-val vert">530h</div>
+      <div class="stat-val vert" id="stat-hcentre">530h</div>
       <div class="stat-label">Heures centre MSADS</div>
     </div>
   </div>
 
   <div class="section-title">Sessions actives</div>
 
+  <!-- Session MSADS uniquement — TP AMIS retiré -->
   <div class="session">
     <div class="session-header">
       <span class="session-name">MSADS 2026</span>
-      <span class="badge badge-active">Démarre demain</span>
+      <span class="badge badge-active" id="badge-statut">Démarre demain</span>
     </div>
     <div class="session-meta">
       <span>📅 8 juin – 27 nov. 2026</span>
       <span>👥 9 apprenants</span>
-      <span>⏱ 530h centre · 245h entreprise</span>
+      <span>⏱ 530h centre · 56h entreprise</span>
       <span>🏫 3 centres · 3 certifications</span>
     </div>
     <div class="session-links">
@@ -562,20 +561,6 @@
       <a class="slink" href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/viwS31g6Uovqx0f59?blocks=hide" target="_blank">🗄 Airtable</a>
       <a class="slink" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">📁 Drive</a>
       <a class="slink" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank">⚙️ Make</a>
-    </div>
-  </div>
-
-  <div class="session orange">
-    <div class="session-header">
-      <span class="session-name">TP AMIS 2026</span>
-      <span class="badge badge-prep">En préparation</span>
-    </div>
-    <div class="session-meta">
-      <span>📅 Dates à définir</span>
-      <span>👥 — apprenants</span>
-    </div>
-    <div class="session-links">
-      <a class="slink" href="#" onclick="showPage('amis', document.querySelectorAll('.nav-item')[2]); return false;">→ Ouvrir la page AMIS</a>
     </div>
   </div>
 
@@ -630,14 +615,14 @@
       <h2>MSADS 2026</h2>
       <p>Médiateur Social Accès aux Droits et aux Services · TP-00398</p>
     </div>
-    <span class="badge badge-active" style="font-size:12px;padding:6px 14px;">8 juin → 27 nov. 2026</span>
+    <span class="badge badge-active" style="font-size:12px;padding:6px 14px;" id="msads-periode">8 juin → 27 nov. 2026</span>
   </div>
 
   <div class="stats">
-    <div class="stat"><div class="stat-val">9</div><div class="stat-label">Stagiaires</div></div>
-    <div class="stat"><div class="stat-val">71</div><div class="stat-label">Jours de formation</div></div>
-    <div class="stat"><div class="stat-val orange">530h</div><div class="stat-label">Heures centre</div></div>
-    <div class="stat"><div class="stat-val">245h</div><div class="stat-label">Heures entreprise</div></div>
+    <div class="stat"><div class="stat-val" id="msads-stagiaires">9</div><div class="stat-label">Stagiaires</div></div>
+    <div class="stat"><div class="stat-val" id="msads-jours">71</div><div class="stat-label">Jours de formation</div></div>
+    <div class="stat"><div class="stat-val orange" id="msads-hcentre">530h</div><div class="stat-label">Heures centre</div></div>
+    <div class="stat"><div class="stat-val" id="msads-hentreprise">56h</div><div class="stat-label">Heures entreprise</div></div>
   </div>
 
   <div class="cert-grid">
@@ -684,7 +669,7 @@
   </div>
 
   <hr>
-  <div class="section-title">Stagiaires — 4 enregistrés (données test)</div>
+  <div class="section-title" id="titre-stagiaires">Stagiaires — 4 enregistrés</div>
   <table class="stagiaires-table">
     <thead>
       <tr>
@@ -695,7 +680,7 @@
         <th>Entretiens</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="tbody-stagiaires">
       <tr>
         <td><span class="initial-circle">BA</span>BAO Ambulahi</td>
         <td>08/06/2026</td>
@@ -804,73 +789,6 @@
         <div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 100% — Examen 23/11</div>
       </div>
     </div>
-  </div>
-
-</div>
-</div>
-
-<!-- ══════════════════════════════════════════════════ -->
-<!-- PAGE AMIS -->
-<div id="page-amis" class="page">
-<div class="main">
-
-  <div class="page-header">
-    <div>
-      <p style="font-size:12px;color:var(--gris-text);margin-bottom:3px;">Session</p>
-      <h2>TP AMIS 2026</h2>
-      <p>Assistant de Milieu de Vie et d'Intégration Sociale</p>
-    </div>
-    <span class="badge badge-prep" style="font-size:12px;padding:6px 14px;">En préparation</span>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><div class="stat-val" style="color:var(--gris-text)">—</div><div class="stat-label">Apprenants inscrits</div></div>
-    <div class="stat"><div class="stat-val" style="color:var(--gris-text)">—</div><div class="stat-label">Date de démarrage</div></div>
-    <div class="stat"><div class="stat-val" style="color:var(--gris-text)">—</div><div class="stat-label">Heures centre</div></div>
-    <div class="stat"><div class="stat-val" style="color:var(--gris-text)">—</div><div class="stat-label">Heures entreprise</div></div>
-  </div>
-
-  <div class="section-title">Outils de la session</div>
-  <div class="tools-grid">
-    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
-      <div class="tool-icon ic-sheets">📊</div>
-      <div><div class="tool-name">Planning AMIS</div><div class="tool-sub">À créer</div></div>
-    </a>
-    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
-      <div class="tool-icon ic-sheets">📋</div>
-      <div><div class="tool-name">Suivi accompagnement</div><div class="tool-sub">À créer</div></div>
-    </a>
-    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/viwS31g6Uovqx0f59?blocks=hide" target="_blank">
-      <div class="tool-icon ic-at">🗄</div>
-      <div><div class="tool-name">Base apprenants</div><div class="tool-sub">Airtable CFA</div></div>
-    </a>
-    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">
-      <div class="tool-icon ic-drive">📁</div>
-      <div><div class="tool-name">Dossier Drive AMIS</div><div class="tool-sub">À créer</div></div>
-    </a>
-    <a class="tool-card" href="https://calendar.google.com" target="_blank">
-      <div class="tool-icon ic-agenda">📅</div>
-      <div><div class="tool-name">Google Agenda</div><div class="tool-sub">Calendrier formation</div></div>
-    </a>
-    <a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
-      <div class="tool-icon ic-gmail">✉️</div>
-      <div><div class="tool-name">Gmail / Brevo</div><div class="tool-sub">Communications apprenants</div></div>
-    </a>
-  </div>
-
-  <hr>
-  <div class="section-title">Documents de la session</div>
-  <div class="doc-row">
-    <div class="doc-row-left"><div class="doc-icon">📄</div>Programme de formation AMIS</div>
-    <a class="slink" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">📁 Ouvrir Drive</a>
-  </div>
-  <div class="doc-row">
-    <div class="doc-row-left"><div class="doc-icon">📄</div>Règlement intérieur</div>
-    <a class="slink" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">📁 Ouvrir Drive</a>
-  </div>
-  <div class="doc-row">
-    <div class="doc-row-left"><div class="doc-icon">📄</div>Livret stagiaire</div>
-    <a class="slink" href="https://drive.google.com/drive/u/4/my-drive" target="_blank">📁 Ouvrir Drive</a>
   </div>
 
 </div>
@@ -1064,224 +982,177 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════ -->
-<!-- PAGE STT TRACKING -->
-<div id="page-stt" class="page">
+<!-- PAGE STAGIAIRES -->
+<div id="page-stagiaires" class="page">
 <div class="main">
 
   <div class="page-header">
     <div>
-      <p style="font-size:12px;color:var(--gris-text);margin-bottom:3px;">Airtable — app85WyXVyhKMutoE</p>
-      <h2>Suivi OF</h2>
-      <p>Suivi of STT by Claude · Trainees, Companies, Sessions, Registrations, Certificates</p>
+      <p style="font-size:12px;color:var(--gris-text);margin-bottom:3px;">appQjS0otb8VrzUxN · tblt5Ey4PNiEpdpNb</p>
+      <h2>👥 Stagiaires MSADS 2026</h2>
+      <p>Données en temps réel depuis Airtable · Modification possible</p>
     </div>
-    <span class="badge badge-active" style="font-size:12px;padding:6px 14px;">Active</span>
-  </div>
-
-  <!-- Quick stats -->
-  <div class="stats" id="stt-stats">
-    <div class="stat">
-      <div class="stat-val" id="stt-nb-stagiaires" style="color:var(--gris-text)">—</div>
-      <div class="stat-label">Trainees</div>
-    </div>
-    <div class="stat">
-      <div class="stat-val orange" id="stt-nb-sessions" style="color:var(--gris-text)">—</div>
-      <div class="stat-label">Sessions</div>
-    </div>
-    <div class="stat">
-      <div class="stat-val" id="stt-nb-entreprises" style="color:var(--gris-text)">—</div>
-      <div class="stat-label">Companies</div>
-    </div>
-    <div class="stat">
-      <div class="stat-val vert" id="stt-nb-certificats" style="color:var(--gris-text)">—</div>
-      <div class="stat-label">Certificates</div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <span id="stag-sync-badge" style="font-size:11px;color:var(--gris-text);font-family:'DM Mono',monospace;">—</span>
+      <button onclick="chargerStagiaires()" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bleu);color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">🔄 Actualiser</button>
     </div>
   </div>
 
-  <!-- Quick links to Airtable tables -->
-  <div class="section-title">Quick Access — Airtable Tables</div>
-  <div class="tools-grid">
-    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE/tbl0mrpziLjLo6FY5" target="_blank">
-      <div class="tool-icon ic-at">👥</div>
-      <div><div class="tool-name">Trainees</div><div class="tool-sub">STAGIAIRES · 15 records</div></div>
-    </a>
-    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
-      <div class="tool-icon ic-at">🏢</div>
-      <div><div class="tool-name">Companies</div><div class="tool-sub">ENTREPRISES</div></div>
-    </a>
-    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
-      <div class="tool-icon ic-at">📚</div>
-      <div><div class="tool-name">Formations</div><div class="tool-sub">FORMATIONS</div></div>
-    </a>
-    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
-      <div class="tool-icon ic-at">📅</div>
-      <div><div class="tool-name">Sessions</div><div class="tool-sub">SESSIONS</div></div>
-    </a>
-    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
-      <div class="tool-icon ic-at">📝</div>
-      <div><div class="tool-name">Registrations</div><div class="tool-sub">INSCRIPTIONS</div></div>
-    </a>
-    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
-      <div class="tool-icon ic-at">🏅</div>
-      <div><div class="tool-name">Certificates</div><div class="tool-sub">CERTIFICATS</div></div>
-    </a>
-    <a class="tool-card" href="https://airtable.com/app85WyXVyhKMutoE" target="_blank">
-      <div class="tool-icon ic-at">💶</div>
-      <div><div class="tool-name">Quotes / Invoices</div><div class="tool-sub">DEVIS-FACTURES</div></div>
-    </a>
+  <!-- Stats dynamiques -->
+  <div class="stats" id="stag-stats" style="display:none;">
+    <div class="stat"><div class="stat-val" id="stag-count" style="color:var(--bleu)">—</div><div class="stat-label">Dossiers chargés</div></div>
+    <div class="stat"><div class="stat-val vert" id="stag-actifs">—</div><div class="stat-label">Dossiers reçus</div></div>
+    <div class="stat"><div class="stat-val orange" id="stag-incomplets">—</div><div class="stat-label">En attente</div></div>
+    <div class="stat"><div class="stat-val" id="stag-last-update" style="font-size:11px;color:var(--gris-text)">—</div><div class="stat-label">Dernière synchro</div></div>
   </div>
 
-  <hr>
-
-  <!-- Trainees table loaded live -->
-  <div class="section-title" id="stt-table-title">Trainees — loading...</div>
-
-  <div id="stt-loading" style="text-align:center;padding:32px;color:var(--gris-text);font-size:13px;">
-    <div style="font-size:28px;margin-bottom:10px;">🔄</div>
-    Connecting to Airtable...
+  <!-- État chargement -->
+  <div id="stag-loading" style="text-align:center;padding:48px 24px;color:var(--gris-text);font-size:13px;">
+    <div style="font-size:32px;margin-bottom:12px;">🔄</div>
+    <div>Connexion à Airtable...</div>
   </div>
 
-  <table class="stagiaires-table" id="stt-table" style="display:none;">
-    <thead>
-      <tr>
-        <th>Full Name</th>
-        <th>Last Name</th>
-        <th>First Name</th>
-        <th>Date of Birth</th>
-        <th>Phone</th>
-      </tr>
-    </thead>
-    <tbody id="stt-tbody">
-    </tbody>
-  </table>
-
-  <div id="stt-error" style="display:none;" class="soon">
+  <!-- Erreur -->
+  <div id="stag-error" style="display:none;" class="soon">
     <div class="soon-icon">⚠️</div>
-    <h3>Unable to load Airtable data</h3>
-    <p>Check your API key or network connection.</p>
-    <code>app85WyXVyhKMutoE</code>
+    <h3>Impossible de charger les données</h3>
+    <p id="stag-error-msg">Vérifier le PAT ou la connexion réseau.</p>
+    <code>appQjS0otb8VrzUxN</code>
   </div>
 
-  <hr>
+  <!-- Barre recherche + filtre -->
+  <div id="stag-toolbar" style="display:none;margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+    <input id="stag-search" type="text" placeholder="🔍 Rechercher un stagiaire..." oninput="filtrerStagiaires()" style="flex:1;min-width:200px;padding:9px 12px;border:1px solid var(--gris-border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;">
+    <select id="stag-filtre-statut" onchange="filtrerStagiaires()" style="padding:9px 12px;border:1px solid var(--gris-border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;background:white;color:var(--texte);">
+      <option value="">Tous les statuts</option>
+    </select>
+  </div>
 
-  <!-- Open in Airtable button -->
-  <div style="text-align:center;padding:8px 0 24px;">
-    <a href="https://airtable.com/app85WyXVyhKMutoE" target="_blank"
-       style="display:inline-flex;align-items:center;gap:8px;background:var(--bleu);color:white;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;box-shadow:var(--shadow-md);">
-      🗄 Open full base in Airtable
-    </a>
+  <!-- Liste fiches stagiaires -->
+  <div id="stag-liste"></div>
+
+  <!-- Modale d'édition -->
+  <div id="stag-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;padding:16px;">
+    <div style="background:white;border-radius:16px;width:620px;max-width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.25);">
+      <div style="padding:22px 24px 0;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:white;z-index:1;border-bottom:1px solid var(--gris-border);padding-bottom:16px;margin-bottom:0;">
+        <div>
+          <div id="modal-titre" style="font-size:16px;font-weight:600;color:var(--texte);">Modifier le dossier</div>
+          <div id="modal-sous-titre" style="font-size:11px;color:var(--gris-text);margin-top:2px;font-family:'DM Mono',monospace;"></div>
+        </div>
+        <button onclick="fermerModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--gris-text);padding:4px 8px;">✕</button>
+      </div>
+      <div id="modal-body" style="padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:12px;"></div>
+      <div style="padding:16px 24px;border-top:1px solid var(--gris-border);display:flex;gap:10px;justify-content:flex-end;background:white;border-radius:0 0 16px 16px;">
+        <button onclick="fermerModal()" style="padding:9px 20px;border:1px solid var(--gris-border);border-radius:8px;background:white;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--gris-dark);">Annuler</button>
+        <button id="btn-sauvegarder-modal" onclick="sauvegarderDossier()" style="padding:9px 20px;border:none;border-radius:8px;background:var(--bleu);color:white;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">✓ Sauvegarder dans Airtable</button>
+      </div>
+    </div>
+  </div>
+  <!-- Modale Documents -->
+  <div id="docs-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1001;align-items:center;justify-content:center;padding:16px;">
+    <div style="background:white;border-radius:16px;width:520px;max-width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.25);">
+      <div style="padding:20px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--gris-border);">
+        <div>
+          <div id="docs-modal-titre" style="font-size:16px;font-weight:600;color:var(--texte);">📄 Documents</div>
+          <div id="docs-modal-sous-titre" style="font-size:12px;color:var(--gris-text);margin-top:2px;"></div>
+        </div>
+        <button onclick="fermerModalDocs()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--gris-text);padding:4px 8px;">✕</button>
+      </div>
+
+      <!-- Info Apps Script -->
+      <div style="margin:16px 24px 0;background:#fff8e8;border:1px solid #f5c89a;border-radius:8px;padding:10px 14px;font-size:12px;color:#92400e;">
+        ⚡ Les documents sont générés via Google Docs et téléchargés en PDF · <strong>Apps Script requis</strong>
+      </div>
+
+      <!-- URL Apps Script config -->
+      <div style="padding:14px 24px 0;">
+        <label style="font-size:11px;font-weight:600;color:var(--gris-text);text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:5px;">URL Apps Script Web App</label>
+        <div style="display:flex;gap:8px;">
+          <input id="docs-script-url" type="text" placeholder="https://script.google.com/macros/s/…/exec"
+            style="flex:1;padding:8px 10px;border:1px solid var(--gris-border);border-radius:7px;font-size:12px;font-family:'DM Mono',monospace;"
+            value="">
+          <button onclick="sauvegarderScriptUrl()" style="padding:8px 12px;background:var(--bleu);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">💾 Sauver</button>
+        </div>
+        <div style="font-size:11px;color:var(--gris-text);margin-top:4px;">Saisissez l'URL une seule fois, elle sera mémorisée.</div>
+      </div>
+
+      <!-- Liste des documents -->
+      <div style="padding:16px 24px;display:flex;flex-direction:column;gap:10px;" id="docs-liste">
+
+        <div class="doc-gen-item" data-doc="livret">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;background:#e8f0fe;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📘</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--texte);">Livret stagiaire</div>
+              <div style="font-size:11px;color:var(--gris-text);">Informations d'accueil et règles de vie</div>
+            </div>
+            <button onclick="genererDocument('livret')" class="btn-gen" style="display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:var(--bleu);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">⬇️ PDF</button>
+          </div>
+          <div class="doc-gen-status" style="display:none;margin-top:8px;font-size:12px;padding:6px 10px;border-radius:6px;"></div>
+        </div>
+
+        <div class="doc-gen-item" data-doc="convocation">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;background:#fff3e8;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📨</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--texte);">Convocation</div>
+              <div style="font-size:11px;color:var(--gris-text);">Convocation au 1er jour de formation</div>
+            </div>
+            <button onclick="genererDocument('convocation')" class="btn-gen" style="display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:var(--bleu);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">⬇️ PDF</button>
+          </div>
+          <div class="doc-gen-status" style="display:none;margin-top:8px;font-size:12px;padding:6px 10px;border-radius:6px;"></div>
+        </div>
+
+        <div class="doc-gen-item" data-doc="contrat">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;background:#ecfdf5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📝</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--texte);">Contrat de formation</div>
+              <div style="font-size:11px;color:var(--gris-text);">Contrat individuel de formation professionnelle</div>
+            </div>
+            <button onclick="genererDocument('contrat')" class="btn-gen" style="display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:var(--bleu);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">⬇️ PDF</button>
+          </div>
+          <div class="doc-gen-status" style="display:none;margin-top:8px;font-size:12px;padding:6px 10px;border-radius:6px;"></div>
+        </div>
+
+        <div class="doc-gen-item" data-doc="convention">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;background:#f3e5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🤝</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--texte);">Convention de stage</div>
+              <div style="font-size:11px;color:var(--gris-text);">Convention tripartite stagiaire / CFA / employeur</div>
+            </div>
+            <button onclick="genererDocument('convention')" class="btn-gen" style="display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:var(--bleu);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">⬇️ PDF</button>
+          </div>
+          <div class="doc-gen-status" style="display:none;margin-top:8px;font-size:12px;padding:6px 10px;border-radius:6px;"></div>
+        </div>
+
+        <div class="doc-gen-item" data-doc="reglement">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;background:#fef2f2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📋</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--texte);">Règlement intérieur</div>
+              <div style="font-size:11px;color:var(--gris-text);">Règlement intérieur du centre de formation</div>
+            </div>
+            <button onclick="genererDocument('reglement')" class="btn-gen" style="display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:var(--bleu);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">⬇️ PDF</button>
+          </div>
+          <div class="doc-gen-status" style="display:none;margin-top:8px;font-size:12px;padding:6px 10px;border-radius:6px;"></div>
+        </div>
+
+      </div>
+
+      <!-- Bouton tous les documents -->
+      <div style="padding:0 24px 20px;">
+        <button onclick="genererTousDocuments()" style="width:100%;padding:11px;background:var(--orange);color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;">
+          📦 Générer et télécharger tous les documents
+        </button>
+        <div id="docs-global-status" style="display:none;margin-top:8px;font-size:12px;text-align:center;color:var(--gris-text);"></div>
+      </div>
+    </div>
   </div>
 
 </div>
 </div>
-
-<script>
-// ── STT Tracking — Load Airtable data ──
-// Uses Airtable public metadata API (no PAT needed for shared views)
-// For live data, paste your PAT below or leave empty for demo mode
-const STT_PAT = ''; // optional — leave empty for demo/static mode
-const STT_BASE = 'app85WyXVyhKMutoE';
-const STT_TABLE = 'tbl0mrpziLjLo6FY5'; // STAGIAIRES table
-
-async function loadSTTData() {
-  if (!STT_PAT) {
-    // Demo mode — show the 15 known trainees from screenshot
-    renderSTTDemo();
-    return;
-  }
-  try {
-    const res = await fetch(`https://api.airtable.com/v0/${STT_BASE}/${STT_TABLE}?maxRecords=100`, {
-      headers: { Authorization: 'Bearer ' + STT_PAT }
-    });
-    if (!res.ok) throw new Error('API error ' + res.status);
-    const json = await res.json();
-    renderSTTRecords(json.records);
-  } catch(e) {
-    document.getElementById('stt-loading').style.display = 'none';
-    document.getElementById('stt-error').style.display = 'block';
-  }
-}
-
-function renderSTTRecords(records) {
-  const tbody = document.getElementById('stt-tbody');
-  tbody.innerHTML = '';
-  records.forEach(r => {
-    const f = r.fields;
-    const nomPrenom = f['Nom Prénom'] || (f['Nom'] + ' ' + f['Prénom']) || '—';
-    const initiales = nomPrenom.split(' ').map(w => w[0] || '').join('').slice(0,2).toUpperCase();
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><span class="initial-circle">${initiales}</span>${nomPrenom}</td>
-      <td>${f['Nom'] || '—'}</td>
-      <td>${f['Prénom'] || '—'}</td>
-      <td>${f['Date de naissance'] || f['DDN'] || '—'}</td>
-      <td style="font-family:'DM Mono',monospace;font-size:12px;">${f['Téléphone'] || f['Tél'] || '—'}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-  document.getElementById('stt-loading').style.display = 'none';
-  document.getElementById('stt-table').style.display = 'table';
-  document.getElementById('stt-table-title').textContent = `Trainees — ${records.length} records`;
-  document.getElementById('stt-nb-stagiaires').textContent = records.length;
-  document.getElementById('stt-nb-stagiaires').style.color = 'var(--bleu)';
-}
-
-function renderSTTDemo() {
-  // Static demo data matching the screenshot (15 trainees visible)
-  const trainees = [
-    { nom:'Dupont', prenom:'Martin', ddn:'', tel:'' },
-    { nom:'Bernard', prenom:'Sophie', ddn:'', tel:'' },
-    { nom:'Moreau', prenom:'Lucas', ddn:'', tel:'' },
-    { nom:'Lefevre', prenom:'Emma', ddn:'', tel:'' },
-    { nom:'Laurent', prenom:'Hugo', ddn:'', tel:'' },
-    { nom:'Petit', prenom:'Camille', ddn:'', tel:'' },
-    { nom:'Robert', prenom:'Julien', ddn:'', tel:'' },
-    { nom:'Dubois', prenom:'Manon', ddn:'', tel:'' },
-    { nom:'Girard', prenom:'Thomas', ddn:'21/5/1998', tel:'+33690123456' },
-    { nom:'Lefort', prenom:'Chloé', ddn:'9/2/2001', tel:'+33601234567' },
-    { nom:'Marchand', prenom:'Antoine', ddn:'19/7/1997', tel:'+33611223344' },
-    { nom:'Faure', prenom:'Laura', ddn:'25/10/1998', tel:'+33622334455' },
-  ];
-  const tbody = document.getElementById('stt-tbody');
-  tbody.innerHTML = '';
-  trainees.forEach(s => {
-    const nomPrenom = s.nom + ' ' + s.prenom;
-    const initiales = (s.nom[0] || '') + (s.prenom[0] || '');
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><span class="initial-circle">${initiales.toUpperCase()}</span>${nomPrenom}</td>
-      <td>${s.nom}</td>
-      <td>${s.prenom}</td>
-      <td style="font-family:'DM Mono',monospace;font-size:12px;">${s.ddn || '—'}</td>
-      <td style="font-family:'DM Mono',monospace;font-size:12px;">${s.tel || '—'}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-  document.getElementById('stt-loading').style.display = 'none';
-  document.getElementById('stt-table').style.display = 'table';
-  document.getElementById('stt-table-title').textContent = `Trainees — 15 records (demo mode · add PAT to load live data)`;
-  document.getElementById('stt-nb-stagiaires').textContent = '15';
-  document.getElementById('stt-nb-stagiaires').style.color = 'var(--bleu)';
-  document.getElementById('stt-nb-sessions').textContent = '—';
-  document.getElementById('stt-nb-entreprises').textContent = '—';
-  document.getElementById('stt-nb-certificats').textContent = '—';
-}
-
-// Load when tab is opened (lazy) — hook after DOMContentLoaded
-const sttLoaded = { done: false };
-document.addEventListener('DOMContentLoaded', function() {
-  // Patch: intercept STT nav click
-  document.querySelectorAll('.nav-item').forEach(function(item) {
-    item.addEventListener('click', function() {
-      if (this.textContent.includes('Suivi OF') && !sttLoaded.done) {
-        sttLoaded.done = true;
-        loadSTTData();
-      }
-    });
-  });
-});
-</script>
-
-<!-- FOOTER -->
 <div class="footer">
   Portail CFA RUNIXO · 3AIM CFA · SIRET 937 988 905 00017 · NDA 04973634297 · contact@3aim.fr · Saint-André, La Réunion
   &nbsp;·&nbsp;
@@ -1396,21 +1267,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // ── Données par défaut ──
+  // ── Données par défaut — sessions corrigé à 1 ──
   const DEFAULTS = {
-    stagiaires: 4,
+    stagiaires: 9,
     jours: 71,
     hcentre: '530h',
-    hentreprise: '245h',
+    hentreprise: '56h',
     datedebut: '8 juin 2026',
     datefin: '27 nov. 2026',
     statut: 'Démarre demain',
-    sessions: 3,
+    sessions: 1,
     banniere: 'Démarrage MSADS demain — 8 juin 2026 · 3 certifications',
     listeStagiaires: [
-      { nom: 'BAO Ambulahi', initiales: 'BA', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' },
-      { nom: 'BOYER Elodie', initiales: 'BE', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' },
-      { nom: 'TANDRAYEN Marie', initiales: 'TM', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' },
+      { nom: 'BAO Ambulahi',         initiales: 'BA', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' },
+      { nom: 'BOYER Elodie',         initiales: 'BE', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' },
+      { nom: 'TANDRAYEN Marie',      initiales: 'TM', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' },
       { nom: 'MANORO Marie Stéphania', initiales: 'MM', debut: '08/06/2026', formation: 'MSADS / CCP3 FPA' }
     ]
   };
@@ -1429,34 +1300,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ── Appliquer les données à la page ──
   function appliquerDonnees(data) {
-    // Stats accueil
-    const vals = document.querySelectorAll('.stat-val');
-    if (vals[0]) vals[0].textContent = data.stagiaires;
-    if (vals[1]) vals[1].textContent = data.sessions;
-    if (vals[2]) vals[2].textContent = data.jours;
-    if (vals[3]) vals[3].textContent = data.hcentre;
+    // Stats accueil (par ID pour éviter les ambiguïtés)
+    document.getElementById('stat-apprenants').textContent = data.stagiaires;
+    document.getElementById('stat-sessions').textContent = data.sessions;
+    document.getElementById('stat-jours').textContent = data.jours;
+    document.getElementById('stat-hcentre').textContent = data.hcentre;
 
-    // Stats MSADS (page MSADS)
-    const msadsVals = document.querySelectorAll('#page-msads .stat-val');
-    if (msadsVals[0]) msadsVals[0].textContent = data.stagiaires;
-    if (msadsVals[1]) msadsVals[1].textContent = data.jours;
-    if (msadsVals[2]) msadsVals[2].textContent = data.hcentre;
-    if (msadsVals[3]) msadsVals[3].textContent = data.hentreprise;
+    // Stats MSADS
+    document.getElementById('msads-stagiaires').textContent = data.stagiaires;
+    document.getElementById('msads-jours').textContent = data.jours;
+    document.getElementById('msads-hcentre').textContent = data.hcentre;
+    document.getElementById('msads-hentreprise').textContent = data.hentreprise;
 
     // Bannière accueil
-    const bannieres = document.querySelectorAll('.banner p');
-    if (bannieres[0]) bannieres[0].textContent = data.banniere;
+    document.getElementById('banniere-text').textContent = data.banniere;
 
-    // Badge MSADS dans session accueil
-    const badges = document.querySelectorAll('.session .badge-active');
-    if (badges[0]) badges[0].textContent = data.statut;
+    // Badge statut MSADS
+    document.getElementById('badge-statut').textContent = data.statut;
 
     // Période dans page header MSADS
-    const periodeEl = document.querySelector('#page-msads .page-header .badge');
-    if (periodeEl) periodeEl.textContent = data.datedebut + ' → ' + data.datefin;
+    document.getElementById('msads-periode').textContent = data.datedebut + ' → ' + data.datefin;
 
     // Tableau stagiaires
-    const tbody = document.querySelector('.stagiaires-table tbody');
+    const tbody = document.getElementById('tbody-stagiaires');
     if (tbody) {
       tbody.innerHTML = '';
       (data.listeStagiaires || []).forEach(s => {
@@ -1473,7 +1339,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Titre section stagiaires
-    const titreStag = document.querySelector('#page-msads .section-title');
+    const titreStag = document.getElementById('titre-stagiaires');
     if (titreStag) titreStag.textContent = `Stagiaires — ${(data.listeStagiaires||[]).length} enregistrés`;
   }
 
@@ -1490,13 +1356,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cfg-sessions').value = data.sessions;
     document.getElementById('cfg-banniere').value = data.banniere;
 
-    // Remplir liste stagiaires
     const container = document.getElementById('cfg-liste-stagiaires');
     container.innerHTML = '';
     (data.listeStagiaires || []).forEach((s, i) => ajouterLigneStagiaire(s, i));
 
-    const overlay = document.getElementById('overlay-config');
-    overlay.style.display = 'flex';
+    document.getElementById('overlay-config').style.display = 'flex';
   }
 
   function fermerConfig() {
@@ -1554,8 +1418,7 @@ document.addEventListener('DOMContentLoaded', function() {
     appliquerDonnees(data);
     fermerConfig();
 
-    // Feedback visuel
-    const btn = document.querySelector('[onclick="ouvrirConfig()"]');
+    const btn = document.querySelector('button[onclick="ouvrirConfig()"]');
     if (btn) {
       btn.textContent = '✓';
       btn.style.background = '#059669';
@@ -1598,12 +1461,12 @@ document.addEventListener('DOMContentLoaded', function() {
         stagiaires: json.nbStagiaires || (json.stagiaires && json.stagiaires.length) || 0,
         jours: json.jours || 71,
         hcentre: json.hCentre || '530h',
-        hentreprise: json.hEntreprise || '245h',
+        hentreprise: json.hEntreprise || '56h',
         datedebut: json.datedebut || '8 juin 2026',
         datefin: json.datefin || '27 nov. 2026',
         statut: json.statut || 'En cours',
-        sessions: json.sessions || 3,
-        banniere: json.banniere || '',
+        sessions: json.sessions || 1,
+        banniere: json.banniere || 'Démarrage MSADS demain — 8 juin 2026 · 3 certifications',
         listeStagiaires: (json.stagiaires || []).map(function(s) {
           return { nom: s.nom, initiales: s.initiales, debut: s.debut, formation: s.formation || 'MSADS / CCP3 FPA' };
         })
@@ -1617,8 +1480,495 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // ═══════════════════════════════════════════════
+// ONGLET STAGIAIRES — Airtable live
+// ═══════════════════════════════════════════════
+const AT_PAT   = 'patGfdRWpbwsnb3Gu.b43f490cd943925747c24e80c4b65281f2b59781b2ae1e3fe5bac00e4609ad21';
+const AT_BASE  = 'appQjS0otb8VrzUxN';
+const AT_TABLE = 'tblt5Ey4PNiEpdpNb';
+const AT_URL   = `https://api.airtable.com/v0/${AT_BASE}/${AT_TABLE}`;
+const AT_HEADERS = { 'Authorization': 'Bearer ' + AT_PAT, 'Content-Type': 'application/json' };
+
+// Champs connus avec libellés lisibles
+const CHAMPS = {
+  ['']: null, // placeholder
+  'fldInoAtKUQEe79tu': { label: 'Nom',          type: 'text',   span: 1 },
+  'fldbfqiqWVGpuIn1G': { label: 'Prénom',        type: 'text',   span: 1 },
+  'fldA4KbyrAzgTOmGX': { label: 'Email',         type: 'email',  span: 2 },
+  'fldEc3ZXdoyYDhnce': { label: 'Téléphone',     type: 'tel',    span: 1 },
+  'fldKVdFnLOhRYe1iV': { label: 'Adresse',       type: 'text',   span: 2 },
+  'fldneYAvxUv7LEqUY': { label: 'Date de naissance', type: 'text', span: 1 },
+  'fldUElLvIRMsaWtR0': { label: 'Statut dossier', type: 'select', span: 1,
+    options: ['Dossier reçu','En attente','Incomplet','Admis','Refusé'] }
+};
+
+let stagiairesBruts = [];   // tous les records Airtable
+let stagiairesAffiches = []; // après filtre
+let recordEnCours = null;   // record en cours d'édition
+
+// ── Charger depuis Airtable ──
+async function chargerStagiaires() {
+  document.getElementById('stag-loading').style.display = 'block';
+  document.getElementById('stag-error').style.display = 'none';
+  document.getElementById('stag-liste').innerHTML = '';
+  document.getElementById('stag-stats').style.display = 'none';
+  document.getElementById('stag-toolbar').style.display = 'none';
+  document.getElementById('stag-sync-badge').textContent = 'Chargement…';
+
+  try {
+    let records = [];
+    let offset = null;
+    do {
+      let url = AT_URL + '?pageSize=100';
+      if (offset) url += '&offset=' + offset;
+      const res = await fetch(url, { headers: AT_HEADERS });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error?.message || 'Erreur API ' + res.status);
+      }
+      const json = await res.json();
+      records = records.concat(json.records);
+      offset = json.offset;
+    } while (offset);
+
+    stagiairesBruts = records;
+
+    // Reconstruire les options de statut dynamiquement
+    const statutsVus = new Set();
+    records.forEach(r => {
+      const s = r.fields['fldUElLvIRMsaWtR0'] || r.fields['Statut'];
+      if (s) statutsVus.add(s);
+    });
+    const sel = document.getElementById('stag-filtre-statut');
+    sel.innerHTML = '<option value="">Tous les statuts</option>';
+    statutsVus.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s; opt.textContent = s;
+      sel.appendChild(opt);
+    });
+
+    document.getElementById('stag-loading').style.display = 'none';
+    document.getElementById('stag-stats').style.display = 'grid';
+    document.getElementById('stag-toolbar').style.display = 'flex';
+
+    const now = new Date();
+    document.getElementById('stag-sync-badge').textContent =
+      'Sync ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+    document.getElementById('stag-last-update').textContent =
+      now.getHours() + 'h' + String(now.getMinutes()).padStart(2,'0');
+
+    filtrerStagiaires();
+
+  } catch(e) {
+    document.getElementById('stag-loading').style.display = 'none';
+    document.getElementById('stag-error').style.display = 'block';
+    document.getElementById('stag-error-msg').textContent = e.message;
+    document.getElementById('stag-sync-badge').textContent = '⚠️ Erreur';
+  }
+}
+
+// ── Filtrer et afficher ──
+function filtrerStagiaires() {
+  const q = (document.getElementById('stag-search').value || '').toLowerCase();
+  const st = document.getElementById('stag-filtre-statut').value;
+
+  stagiairesAffiches = stagiairesBruts.filter(r => {
+    const f = r.fields;
+    const nom = ((f['fldInoAtKUQEe79tu'] || f['Nom'] || '') + ' ' +
+                 (f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '')).toLowerCase();
+    const statut = f['fldUElLvIRMsaWtR0'] || f['Statut'] || '';
+    const matchQ = !q || nom.includes(q);
+    const matchSt = !st || statut === st;
+    return matchQ && matchSt;
+  });
+
+  // Stats
+  const actifs = stagiairesBruts.filter(r =>
+    (r.fields['fldUElLvIRMsaWtR0'] || r.fields['Statut'] || '') === 'Dossier reçu').length;
+  const incomplets = stagiairesBruts.filter(r => {
+    const s = r.fields['fldUElLvIRMsaWtR0'] || r.fields['Statut'] || '';
+    return s && s !== 'Dossier reçu';
+  }).length;
+  document.getElementById('stag-count').textContent = stagiairesAffiches.length;
+  document.getElementById('stag-actifs').textContent = actifs;
+  document.getElementById('stag-incomplets').textContent = incomplets;
+
+  afficherFiches();
+}
+
+// ── Afficher les fiches ──
+function afficherFiches() {
+  const liste = document.getElementById('stag-liste');
+  liste.innerHTML = '';
+
+  if (stagiairesAffiches.length === 0) {
+    liste.innerHTML = '<div class="soon" style="padding:32px"><div class="soon-icon">🔍</div><h3>Aucun résultat</h3><p>Modifiez les filtres ci-dessus.</p></div>';
+    return;
+  }
+
+  stagiairesAffiches.forEach(record => {
+    const f = record.fields;
+    const nom     = f['fldInoAtKUQEe79tu'] || f['Nom'] || '—';
+    const prenom  = f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '—';
+    const email   = f['fldA4KbyrAzgTOmGX'] || f['Email'] || '—';
+    const tel     = f['fldEc3ZXdoyYDhnce'] || f['Téléphone'] || '—';
+    const adresse = f['fldKVdFnLOhRYe1iV'] || f['Adresse'] || '—';
+    const ddn     = f['fldneYAvxUv7LEqUY'] || f['Date de naissance'] || '—';
+    const statut  = f['fldUElLvIRMsaWtR0'] || f['Statut'] || 'Non renseigné';
+    const initiales = (nom[0]||'') + (prenom[0]||'');
+
+    // Badge couleur selon statut
+    let badgeClass = 'badge-plan';
+    if (statut === 'Dossier reçu') badgeClass = 'badge-active';
+    else if (statut === 'En attente' || statut === 'Incomplet') badgeClass = 'badge-prep';
+    else if (statut === 'Refusé') badgeClass = 'badge-warn';
+
+    // Autres champs non connus
+    const champsConnus = new Set(['fldInoAtKUQEe79tu','fldbfqiqWVGpuIn1G','fldA4KbyrAzgTOmGX',
+      'fldEc3ZXdoyYDhnce','fldKVdFnLOhRYe1iV','fldneYAvxUv7LEqUY','fldUElLvIRMsaWtR0',
+      'Nom','Prénom','Email','Téléphone','Adresse','Date de naissance','Statut']);
+    const champsSupp = Object.entries(f)
+      .filter(([k]) => !champsConnus.has(k))
+      .map(([k,v]) => `<div style="display:flex;gap:6px;font-size:12px;color:var(--gris-text);"><span style="min-width:120px;font-weight:500;color:var(--gris-dark);">${k}:</span><span style="color:var(--texte)">${Array.isArray(v)?v.join(', '):v}</span></div>`)
+      .join('');
+
+    const card = document.createElement('div');
+    card.style.cssText = 'background:white;border:1px solid var(--gris-border);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:12px;box-shadow:var(--shadow);';
+    card.innerHTML = `
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:44px;height:44px;border-radius:50%;background:var(--bleu-pale);color:var(--bleu);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;">${initiales.toUpperCase()}</div>
+          <div>
+            <div style="font-size:16px;font-weight:600;color:var(--texte);">${nom} ${prenom}</div>
+            <div style="font-size:12px;color:var(--gris-text);margin-top:2px;font-family:'DM Mono',monospace;">${record.id}</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap;">
+          <span class="badge ${badgeClass}">${statut}</span>
+          <button onclick="ouvrirModalDocs('${record.id}')" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:#fff3e8;color:var(--orange);border:1px solid #f5c89a;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">📄 Documents</button>
+          <button onclick="ouvrirModal('${record.id}')" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:var(--bleu-pale);color:var(--bleu);border:1px solid #c5d3e8;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">✏️ Modifier</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:${champsSupp?'12px':'0'};">
+        <div style="background:var(--gris-bg);border-radius:8px;padding:10px 12px;">
+          <div style="font-size:10px;font-weight:600;color:var(--gris-text);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;">Email</div>
+          <div style="font-size:13px;color:var(--bleu);">${email !== '—' ? `<a href="mailto:${email}" style="color:var(--bleu);text-decoration:none;">${email}</a>` : '—'}</div>
+        </div>
+        <div style="background:var(--gris-bg);border-radius:8px;padding:10px 12px;">
+          <div style="font-size:10px;font-weight:600;color:var(--gris-text);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;">Téléphone</div>
+          <div style="font-size:13px;color:var(--texte);">${tel}</div>
+        </div>
+        <div style="background:var(--gris-bg);border-radius:8px;padding:10px 12px;">
+          <div style="font-size:10px;font-weight:600;color:var(--gris-text);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;">Date de naissance</div>
+          <div style="font-size:13px;color:var(--texte);font-family:'DM Mono',monospace;">${ddn}</div>
+        </div>
+        <div style="background:var(--gris-bg);border-radius:8px;padding:10px 12px;grid-column:span 2;">
+          <div style="font-size:10px;font-weight:600;color:var(--gris-text);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:3px;">Adresse</div>
+          <div style="font-size:13px;color:var(--texte);">${adresse}</div>
+        </div>
+      </div>
+      ${champsSupp ? `<details style="margin-top:10px;"><summary style="font-size:12px;color:var(--gris-text);cursor:pointer;padding:6px 0;">Autres champs Airtable (${Object.keys(f).filter(k=>!champsConnus.has(k)).length})</summary><div style="margin-top:8px;padding:12px;background:var(--gris-bg);border-radius:8px;display:flex;flex-direction:column;gap:6px;">${champsSupp}</div></details>` : ''}
+    `;
+    liste.appendChild(card);
+  });
+}
+
+// ── Ouvrir modale d'édition ──
+function ouvrirModal(recordId) {
+  recordEnCours = stagiairesBruts.find(r => r.id === recordId);
+  if (!recordEnCours) return;
+
+  const f = recordEnCours.fields;
+  const nom    = f['fldInoAtKUQEe79tu'] || f['Nom'] || '';
+  const prenom = f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '';
+
+  document.getElementById('modal-titre').textContent = `${nom} ${prenom}`;
+  document.getElementById('modal-sous-titre').textContent = recordId;
+
+  const body = document.getElementById('modal-body');
+  body.innerHTML = '';
+
+  // Champs principaux
+  const champsOrdonnes = [
+    { id: 'fldInoAtKUQEe79tu', fallback: 'Nom',              label: 'Nom',              type: 'text',   span: 1 },
+    { id: 'fldbfqiqWVGpuIn1G', fallback: 'Prénom',           label: 'Prénom',           type: 'text',   span: 1 },
+    { id: 'fldA4KbyrAzgTOmGX', fallback: 'Email',            label: 'Email',            type: 'email',  span: 2 },
+    { id: 'fldEc3ZXdoyYDhnce', fallback: 'Téléphone',        label: 'Téléphone',        type: 'tel',    span: 1 },
+    { id: 'fldneYAvxUv7LEqUY', fallback: 'Date de naissance',label: 'Date de naissance',type: 'text',   span: 1 },
+    { id: 'fldKVdFnLOhRYe1iV', fallback: 'Adresse',          label: 'Adresse',          type: 'text',   span: 2 },
+    { id: 'fldUElLvIRMsaWtR0', fallback: 'Statut',           label: 'Statut dossier',   type: 'select', span: 2,
+      options: ['Dossier reçu','En attente','Incomplet','Admis','Refusé'] },
+  ];
+
+  // Champs supplémentaires (tous les autres présents dans le record)
+  const champsConnus = new Set(champsOrdonnes.map(c => c.id).concat(champsOrdonnes.map(c => c.fallback)));
+  const champsSuppRecords = Object.keys(f).filter(k => !champsConnus.has(k));
+
+  champsOrdonnes.forEach(c => {
+    const val = f[c.id] !== undefined ? f[c.id] : (f[c.fallback] || '');
+    const div = document.createElement('div');
+    div.style.gridColumn = `span ${c.span}`;
+    let input;
+    if (c.type === 'select') {
+      input = `<select data-field-id="${c.id}" data-field-name="${c.fallback}" style="width:100%;padding:9px 10px;border:1px solid var(--gris-border);border-radius:7px;font-size:13px;font-family:'DM Sans',sans-serif;background:white;color:var(--texte);">
+        ${c.options.map(o => `<option value="${o}"${val===o?' selected':''}>${o}</option>`).join('')}
+      </select>`;
+    } else {
+      input = `<input type="${c.type}" data-field-id="${c.id}" data-field-name="${c.fallback}" value="${String(val).replace(/"/g,'&quot;')}" style="width:100%;padding:9px 10px;border:1px solid var(--gris-border);border-radius:7px;font-size:13px;font-family:'DM Sans',sans-serif;">`;
+    }
+    div.innerHTML = `<label style="font-size:11px;font-weight:600;color:var(--gris-text);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em;">${c.label}</label>${input}`;
+    body.appendChild(div);
+  });
+
+  // Champs supplémentaires en lecture seule
+  if (champsSuppRecords.length > 0) {
+    const sep = document.createElement('div');
+    sep.style.gridColumn = 'span 2';
+    sep.innerHTML = `<div style="font-size:11px;font-weight:600;color:var(--gris-text);text-transform:uppercase;letter-spacing:0.08em;padding-top:8px;border-top:1px solid var(--gris-border);">Autres champs Airtable (lecture seule)</div>`;
+    body.appendChild(sep);
+    champsSuppRecords.forEach(k => {
+      const div = document.createElement('div');
+      div.style.gridColumn = 'span 1';
+      const v = Array.isArray(f[k]) ? f[k].join(', ') : (f[k] ?? '—');
+      div.innerHTML = `<label style="font-size:11px;font-weight:600;color:var(--gris-text);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em;">${k}</label><div style="padding:9px 10px;background:var(--gris-bg);border:1px solid var(--gris-border);border-radius:7px;font-size:13px;color:var(--gris-dark);">${v}</div>`;
+      body.appendChild(div);
+    });
+  }
+
+  document.getElementById('stag-modal').style.display = 'flex';
+}
+
+function fermerModal() {
+  document.getElementById('stag-modal').style.display = 'none';
+  recordEnCours = null;
+}
+
+// ── Sauvegarder vers Airtable ──
+async function sauvegarderDossier() {
+  if (!recordEnCours) return;
+  const btn = document.getElementById('btn-sauvegarder-modal');
+  btn.textContent = '⏳ Sauvegarde…';
+  btn.disabled = true;
+
+  const body = document.getElementById('modal-body');
+  const inputs = body.querySelectorAll('[data-field-id]');
+  const fields = {};
+  inputs.forEach(el => {
+    const fieldId = el.dataset.fieldId;
+    if (fieldId) fields[fieldId] = el.value;
+  });
+
+  try {
+    const res = await fetch(`${AT_URL}/${recordEnCours.id}`, {
+      method: 'PATCH',
+      headers: AT_HEADERS,
+      body: JSON.stringify({ fields })
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error?.message || 'Erreur API ' + res.status);
+    }
+    const updated = await res.json();
+
+    // Mettre à jour le cache local
+    const idx = stagiairesBruts.findIndex(r => r.id === updated.id);
+    if (idx !== -1) stagiairesBruts[idx] = updated;
+
+    fermerModal();
+    filtrerStagiaires();
+
+    // Feedback
+    btn.textContent = '✓ Sauvegarder dans Airtable';
+    btn.disabled = false;
+    afficherSyncStatus('✅ Dossier mis à jour dans Airtable', '#059669');
+
+  } catch(e) {
+    btn.textContent = '✓ Sauvegarder dans Airtable';
+    btn.disabled = false;
+    alert('Erreur lors de la sauvegarde : ' + e.message);
+  }
+}
+
+// ── Fermer modal en cliquant dehors ──
+document.getElementById('stag-modal').addEventListener('click', function(e) {
+  if (e.target === this) fermerModal();
+});
+
+// ═══════════════════════════════════════════════
+// GÉNÉRATION DOCUMENTS PDF via Apps Script
+// ═══════════════════════════════════════════════
+const DOCS_CONFIG = {
+  livret:     { label: 'Livret stagiaire',    templateId: '1w2-q6562rauFIjaP0r1VJqu0BTyugQ4_HtxEOyJ6MfA' },
+  convocation:{ label: 'Convocation',         templateId: '1AXN63GqXc4_-Fg9y12HnmtS0LIqyqSGKRJpuPFoE4OE' },
+  contrat:    { label: 'Contrat de formation',templateId: '11g_SpGkwnTRP-DaCd3_8_rbcm_Pb1jarxR-v-ne5Cm0'  },
+  convention: { label: 'Convention de stage', templateId: '1QMWzrjf7TrFfKri495I8b3d0Kr6NLIu4_66Os1e17Ts'  },
+  reglement:  { label: 'Règlement intérieur', templateId: '1l8GvVeWS_siQq5iUG71jhLjILK2qSm6wcC5YKYJBGRk'  },
+};
+
+let recordDocEnCours = null;
+
+const SCRIPT_URL_PDF = 'https://script.google.com/macros/s/AKfycbzwU0iO6jM9ZhImCaskFtXGLkGaOBJxK75YU3b4VASk8gt-SPK_b5Tv9ZyuUpjL8Te-Ig/exec';
+
+function getScriptUrl() {
+  return localStorage.getItem('portail_cfa_script_url') || SCRIPT_URL_PDF;
+}
+
+function sauvegarderScriptUrl() {
+  const url = document.getElementById('docs-script-url').value.trim();
+  if (url) {
+    localStorage.setItem('portail_cfa_script_url', url);
+    afficherSyncStatus('✅ URL Apps Script sauvegardée', '#059669');
+  }
+}
+
+function ouvrirModalDocs(recordId) {
+  recordDocEnCours = stagiairesBruts.find(r => r.id === recordId);
+  if (!recordDocEnCours) return;
+  const f = recordDocEnCours.fields;
+  const nom    = f['fldInoAtKUQEe79tu'] || f['Nom'] || '';
+  const prenom = f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '';
+
+  document.getElementById('docs-modal-titre').textContent = `📄 Documents — ${nom} ${prenom}`;
+  document.getElementById('docs-modal-sous-titre').textContent = recordId;
+
+  // Restaurer l'URL sauvegardée (ou l'URL par défaut)
+  document.getElementById('docs-script-url').value = getScriptUrl();
+
+  // Réinitialiser les statuts
+  document.querySelectorAll('.doc-gen-status').forEach(el => {
+    el.style.display = 'none'; el.textContent = '';
+  });
+  document.querySelectorAll('.btn-gen').forEach(btn => {
+    btn.disabled = false; btn.textContent = '⬇️ PDF';
+  });
+  document.getElementById('docs-global-status').style.display = 'none';
+
+  document.getElementById('docs-modal').style.display = 'flex';
+}
+
+function fermerModalDocs() {
+  document.getElementById('docs-modal').style.display = 'none';
+  recordDocEnCours = null;
+}
+
+async function genererDocument(typeDoc) {
+  if (!recordDocEnCours) return;
+
+  const scriptUrl = getScriptUrl();
+  if (!scriptUrl) {
+    alert('⚠️ Veuillez d\'abord saisir l\'URL de l\'Apps Script Web App ci-dessus.');
+    return;
+  }
+
+  const item = document.querySelector(`.doc-gen-item[data-doc="${typeDoc}"]`);
+  const btn  = item.querySelector('.btn-gen');
+  const statusEl = item.querySelector('.doc-gen-status');
+  const config = DOCS_CONFIG[typeDoc];
+
+  btn.disabled = true;
+  btn.textContent = '⏳…';
+  statusEl.style.display = 'block';
+  statusEl.style.background = '#e8f0fb';
+  statusEl.style.color = '#1A3A6B';
+  statusEl.textContent = `Génération du ${config.label} en cours…`;
+
+  const f = recordDocEnCours.fields;
+  const payload = {
+    action: 'genererPDF',
+    templateId: config.templateId,
+    nomDoc: config.label,
+    recordId: recordDocEnCours.id,
+    balises: {
+      NOM:                f['fldInoAtKUQEe79tu'] || f['Nom'] || '',
+      PRENOM:             f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '',
+      EMAIL:              f['fldA4KbyrAzgTOmGX'] || f['Email'] || '',
+      TELEPHONE:          f['fldEc3ZXdoyYDhnce'] || f['Téléphone'] || '',
+      ADRESSE:            f['fldKVdFnLOhRYe1iV'] || f['Adresse'] || '',
+      DATE_NAISSANCE:     f['fldneYAvxUv7LEqUY'] || f['Date de naissance'] || '',
+      INTITULE_FORMATION: 'TP Médiateur Social Accès aux Droits et aux Services',
+      NIVEAU:             'Niveau 4',
+      DUREE_TOTALE:       '775h',
+      DUREE_CENTRE:       '530h',
+      DUREE_ENTREPRISE:   '245h',
+      DATE_DEBUT:         '08/06/2026',
+      DATE_FIN:           '27/11/2026',
+      LIEU_FORMATION:     '109 Lotissement les Lilas, 97440 Saint-André',
+      MODE_FORMATION:     'Présentiel',
+      DATE_DOCUMENT:      new Date().toLocaleDateString('fr-FR'),
+    }
+  };
+
+  try {
+    // Apps Script ne supporte pas CORS en POST depuis le navigateur.
+    // On encode le payload dans l'URL et on appelle en GET via no-cors + iframe trick.
+    // La méthode fiable : passer par un <script> tag dynamique (JSONP-style via fetch no-cors
+    // ne retourne pas de données). Solution propre : fetch avec redirect=follow sur l'URL GET.
+    const payloadStr = encodeURIComponent(JSON.stringify(payload));
+    const url = scriptUrl + '?payload=' + payloadStr;
+
+    const res = await fetch(url, {
+      method: 'GET',
+      redirect: 'follow',
+    });
+
+    // Apps Script renvoie du texte JSON
+    const text = await res.text();
+    let json;
+    try {
+      json = JSON.parse(text);
+    } catch(pe) {
+      throw new Error('Réponse non-JSON du script : ' + text.slice(0, 200));
+    }
+
+    if (json.success && json.pdfUrl) {
+      statusEl.style.background = '#ecfdf5';
+      statusEl.style.color = '#059669';
+      statusEl.innerHTML = `✅ Généré ! <a href="${json.pdfUrl}" target="_blank" download style="color:#059669;font-weight:600;margin-left:6px;">⬇️ Télécharger le PDF</a>`;
+      btn.textContent = '✓';
+      btn.style.background = '#059669';
+    } else {
+      throw new Error(json.error || 'Réponse inattendue');
+    }
+  } catch(e) {
+    statusEl.style.background = '#fef2f2';
+    statusEl.style.color = '#dc2626';
+    statusEl.textContent = `❌ Erreur : ${e.message}`;
+    btn.disabled = false;
+    btn.textContent = '⬇️ PDF';
+  }
+}
+
+async function genererTousDocuments() {
+  const statusEl = document.getElementById('docs-global-status');
+  statusEl.style.display = 'block';
+  statusEl.textContent = 'Génération de tous les documents en cours (1/5)…';
+
+  const types = Object.keys(DOCS_CONFIG);
+  for (let i = 0; i < types.length; i++) {
+    statusEl.textContent = `Génération en cours (${i+1}/${types.length}) : ${DOCS_CONFIG[types[i]].label}…`;
+    await genererDocument(types[i]);
+    await new Promise(r => setTimeout(r, 800)); // pause entre chaque
+  }
+  statusEl.textContent = '✅ Tous les documents ont été générés !';
+}
+
+// Fermer docs modal en cliquant dehors
+document.getElementById('docs-modal').addEventListener('click', function(e) {
+  if (e.target === this) fermerModalDocs();
+});
+
+
+let stagLoaded = false;
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    if (this.textContent.includes('Stagiaires') && !stagLoaded) {
+      stagLoaded = true;
+      chargerStagiaires();
+    }
+  });
+});
+
   // ── Initialisation ──
-  // Affichage immédiat des données locales, puis sync Sheets en arrière-plan
   appliquerDonnees(chargerDonnees());
   syncDepuisSheets();
 </script>
