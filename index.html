@@ -1851,30 +1851,18 @@ function fermerModalDocs() {
   recordDocEnCours = null;
 }
 
-async function genererDocument(typeDoc) {
+function genererDocument(typeDoc) {
   if (!recordDocEnCours) return;
 
   const scriptUrl = getScriptUrl();
-  if (!scriptUrl) {
-    alert('⚠️ Veuillez d\'abord saisir l\'URL de l\'Apps Script Web App ci-dessus.');
-    return;
-  }
-
-  const item = document.querySelector(`.doc-gen-item[data-doc="${typeDoc}"]`);
-  const btn  = item.querySelector('.btn-gen');
-  const statusEl = item.querySelector('.doc-gen-status');
-  const config = DOCS_CONFIG[typeDoc];
-
-  btn.disabled = true;
-  btn.textContent = '⏳…';
-  statusEl.style.display = 'block';
-  statusEl.style.background = '#e8f0fb';
-  statusEl.style.color = '#1A3A6B';
-  statusEl.textContent = `Génération du ${config.label} en cours…`;
+  const item    = document.querySelector(`.doc-gen-item[data-doc="${typeDoc}"]`);
+  const btn     = item.querySelector('.btn-gen');
+  const statusEl= item.querySelector('.doc-gen-status');
+  const config  = DOCS_CONFIG[typeDoc];
 
   const f = recordDocEnCours.fields;
   const payload = {
-    action: 'genererPDF',
+    action:  'genererPDF',
     typeDoc: typeDoc,
     balises: {
       NOM:                f['fldInoAtKUQEe79tu'] || f['Nom'] || '',
@@ -1896,58 +1884,33 @@ async function genererDocument(typeDoc) {
     }
   };
 
-  try {
-    // Apps Script ne supporte pas CORS en POST depuis le navigateur.
-    // On encode le payload dans l'URL et on appelle en GET via no-cors + iframe trick.
-    // La méthode fiable : passer par un <script> tag dynamique (JSONP-style via fetch no-cors
-    // ne retourne pas de données). Solution propre : fetch avec redirect=follow sur l'URL GET.
-    const payloadStr = encodeURIComponent(JSON.stringify(payload));
-    const url = scriptUrl + '?payload=' + payloadStr;
+  // Construire l'URL et ouvrir dans un nouvel onglet
+  // (seule méthode fiable : le navigateur suit les redirections Google avec la session active)
+  const url = scriptUrl + '?payload=' + encodeURIComponent(JSON.stringify(payload));
+  window.open(url, '_blank');
 
-    const res = await fetch(url, {
-      method: 'GET',
-      redirect: 'follow',
-    });
-
-    // Apps Script renvoie du texte JSON
-    const text = await res.text();
-    let json;
-    try {
-      json = JSON.parse(text);
-    } catch(pe) {
-      throw new Error('Réponse non-JSON du script : ' + text.slice(0, 200));
-    }
-
-    if (json.success && json.pdfUrl) {
-      statusEl.style.background = '#ecfdf5';
-      statusEl.style.color = '#059669';
-      statusEl.innerHTML = `✅ Généré ! <a href="${json.pdfUrl}" target="_blank" download style="color:#059669;font-weight:600;margin-left:6px;">⬇️ Télécharger le PDF</a>`;
-      btn.textContent = '✓';
-      btn.style.background = '#059669';
-    } else {
-      throw new Error(json.error || 'Réponse inattendue');
-    }
-  } catch(e) {
-    statusEl.style.background = '#fef2f2';
-    statusEl.style.color = '#dc2626';
-    statusEl.textContent = `❌ Erreur : ${e.message}`;
-    btn.disabled = false;
-    btn.textContent = '⬇️ PDF';
-  }
+  // Feedback visuel
+  statusEl.style.display  = 'block';
+  statusEl.style.background = '#ecfdf5';
+  statusEl.style.color    = '#059669';
+  statusEl.innerHTML = `✅ Ouvert dans un nouvel onglet — le PDF apparaîtra dans ton Drive (<a href="https://drive.google.com/drive/search?q=PORTAIL+CFA" target="_blank" style="color:#059669;font-weight:600;">📁 Voir Drive</a>)`;
+  btn.textContent = '✓';
+  btn.style.background = '#059669';
 }
 
 async function genererTousDocuments() {
   const statusEl = document.getElementById('docs-global-status');
   statusEl.style.display = 'block';
-  statusEl.textContent = 'Génération de tous les documents en cours (1/5)…';
+  statusEl.textContent = '⏳ Ouverture des 5 documents… (autorisez les popups si demandé)';
 
   const types = Object.keys(DOCS_CONFIG);
-  for (let i = 0; i < types.length; i++) {
-    statusEl.textContent = `Génération en cours (${i+1}/${types.length}) : ${DOCS_CONFIG[types[i]].label}…`;
-    await genererDocument(types[i]);
-    await new Promise(r => setTimeout(r, 800)); // pause entre chaque
-  }
-  statusEl.textContent = '✅ Tous les documents ont été générés !';
+  types.forEach((t, i) => {
+    setTimeout(() => genererDocument(t), i * 1200);
+  });
+
+  setTimeout(() => {
+    statusEl.innerHTML = '✅ 5 onglets ouverts — les PDFs seront dans <a href="https://drive.google.com/drive/search?q=PORTAIL+CFA" target="_blank" style="color:#059669;font-weight:600;">PORTAIL CFA — PDFs Générés</a> dans ton Drive';
+  }, types.length * 1200 + 500);
 }
 
 // Fermer docs modal en cliquant dehors
