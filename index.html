@@ -1807,7 +1807,7 @@ const DOCS_CONFIG = {
 
 let recordDocEnCours = null;
 
-const SCRIPT_URL_PDF = 'https://script.google.com/macros/s/AKfycbzwU0iO6jM9ZhImCaskFtXGLkGaOBJxK75YU3b4VASk8gt-SPK_b5Tv9ZyuUpjL8Te-Ig/exec';
+const SCRIPT_URL_PDF = 'https://script.google.com/macros/s/AKfycbz257L3JgNdFSRTnlMa1MJqtR2nDFd2-VxgCI7FH965PqTmS6Tv_jSuPs8NeWMeV5GU4Q/exec';
 
 function getScriptUrl() {
   return localStorage.getItem('portail_cfa_script_url') || SCRIPT_URL_PDF;
@@ -1875,9 +1875,7 @@ async function genererDocument(typeDoc) {
   const f = recordDocEnCours.fields;
   const payload = {
     action: 'genererPDF',
-    templateId: config.templateId,
-    nomDoc: config.label,
-    recordId: recordDocEnCours.id,
+    typeDoc: typeDoc,
     balises: {
       NOM:                f['fldInoAtKUQEe79tu'] || f['Nom'] || '',
       PRENOM:             f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '',
@@ -1889,7 +1887,7 @@ async function genererDocument(typeDoc) {
       NIVEAU:             'Niveau 4',
       DUREE_TOTALE:       '775h',
       DUREE_CENTRE:       '530h',
-      DUREE_ENTREPRISE:   '245h',
+      DUREE_ENTREPRISE:   '56h',
       DATE_DEBUT:         '08/06/2026',
       DATE_FIN:           '27/11/2026',
       LIEU_FORMATION:     '109 Lotissement les Lilas, 97440 Saint-André',
