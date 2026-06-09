@@ -946,10 +946,7 @@ document.getElementById('docs-modal').addEventListener('click', function(e) { if
 // MSADS & CIP - Airtable live
 // ═══════════════════════════════════════════════════════
 
-const AT2_PAT     = 'patGfdRWpbwsnb3Gu.b43f490cd943925747c24e80c4b65281f2b59781b2ae1e3fe5bac00e4609ad21';
-const AT2_BASE    = 'appQjS0otb8VrzUxN';
-const AT2_TABLE   = 'tblt5Ey4PNiEpdpNb';
-const AT2_HEADERS = { 'Authorization': 'Bearer ' + AT2_PAT };
+
 
 // IDs des sessions
 // ═══════════════════════════════════════════════════════
@@ -1054,8 +1051,8 @@ async function initialiserSessions() {
       // Onglet nav
       const navEl = document.createElement('div');
       navEl.className = 'nav-item';
-      navEl.setAttribute('onclick', "showPage('" + pageId + "',this)");
       navEl.textContent = sessionLabel;
+      navEl.addEventListener('click', function() { showPage(pageId, navEl); });
       navContainer.appendChild(navEl);
 
       // Page
