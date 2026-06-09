@@ -734,20 +734,22 @@ async function chargerTitresSessions() {
     const res = await fetch(url, { headers: { 'Authorization': 'Bearer patGfdRWpbwsnb3Gu.b43f490cd943925747c24e80c4b65281f2b59781b2ae1e3fe5bac00e4609ad21' } });
     const json = await res.json();
     const sessions = json.records || [];
-    if (sessions[0]) {
-      const s1 = sessions[0].fields;
-      const t1 = document.getElementById('msads-titre');
-      const st1 = document.getElementById('msads-sous-titre');
-      if (t1) t1.textContent = 'Session 01';
-      if (st1) st1.textContent = s1['INTITULE_FORMATION'] || '';
-    }
-    if (sessions[1]) {
-      const s2 = sessions[1].fields;
-      const t2 = document.getElementById('cip-titre');
-      const st2 = document.getElementById('cip-sous-titre');
-      if (t2) t2.textContent = 'Session 02';
-      if (st2) st2.textContent = s2['INTITULE_FORMATION'] || '';
-    }
+    sessions.forEach(function(s) {
+      const f = s.fields;
+      const intitule = f['INTITULE_FORMATION'] || '';
+      if (s.id === SESSION_MSADS) {
+        const t = document.getElementById('msads-titre');
+        const st = document.getElementById('msads-sous-titre');
+        if (t) t.textContent = 'Session 01';
+        if (st) st.textContent = intitule;
+      }
+      if (s.id === SESSION_CIP) {
+        const t = document.getElementById('cip-titre');
+        const st = document.getElementById('cip-sous-titre');
+        if (t) t.textContent = 'Session 02';
+        if (st) st.textContent = intitule;
+      }
+    });
   } catch(e) { console.log('Erreur titres sessions:', e.message); }
 }
 
@@ -1092,7 +1094,7 @@ const AT2_HEADERS = { 'Authorization': 'Bearer ' + AT2_PAT };
 
 // IDs des sessions
 const SESSION_MSADS = 'recRfcQIkKBRYq8q5';
-const SESSION_CIP   = 'rec29Qg4T8XeBvazh';
+const SESSION_CIP   = 'recNw38Xwe4gldWzO';
 
 // Champ Session dans Dossiers Apprentis = fldEg6m9OTCN6mCVT (multipleRecordLinks)
 
