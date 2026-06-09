@@ -254,7 +254,7 @@
   <div class="section-title" id="titre-stagiaires">Stagiaires — 4 enregistrés</div>
   <table class="stagiaires-table">
     <thead><tr><th>Nom prénom</th><th>Démarrage</th><th>Formation</th><th>Statut</th><th>Entretiens</th></tr></thead>
-    <tbody id="tbody-stagiaires">
+    <tbody id="tbody-msads">
       <tr><td><span class="initial-circle">BA</span>BAO Ambulahi</td><td>08/06/2026</td><td>MSADS / CCP3 FPA</td><td><span class="badge badge-active">En cours</span></td><td style="font-family:DM Mono,monospace;font-size:12px;color:var(--gris-text)">0 / 13</td></tr>
       <tr><td><span class="initial-circle">BE</span>BOYER Elodie</td><td>08/06/2026</td><td>MSADS / CCP3 FPA</td><td><span class="badge badge-active">En cours</span></td><td style="font-family:DM Mono,monospace;font-size:12px;color:var(--gris-text)">0 / 13</td></tr>
       <tr><td><span class="initial-circle">TM</span>TANDRAYEN Marie</td><td>08/06/2026</td><td>MSADS / CCP3 FPA</td><td><span class="badge badge-active">En cours</span></td><td style="font-family:DM Mono,monospace;font-size:12px;color:var(--gris-text)">0 / 13</td></tr>
@@ -1139,7 +1139,7 @@ function statutBadge(s) {
 }
 
 async function chargerMSADS() {
-  const tbody = document.getElementById('tbody-stagiaires');
+  const tbody = document.getElementById('tbody-msads');
   const titreEl = document.getElementById('titre-stagiaires');
   if (!tbody) return;
   tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);">⏳ Chargement…</td></tr>';
