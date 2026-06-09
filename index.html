@@ -1077,6 +1077,14 @@ async function fetchDossiers() {
   return records;
 }
 
+function getSessionIds(record) {
+  // Le champ Session retourne un tableau de record IDs (strings)
+  const val = record.fields['fldEg6m9OTCN6mCVT'];
+  if (!val) return [];
+  if (Array.isArray(val)) return val.map(v => typeof v === 'object' ? v.id || v : v);
+  return [val];
+}
+
 function initiales(nom, prenom) {
   return ((nom||'').charAt(0) + (prenom||'').charAt(0)).toUpperCase();
 }
@@ -1098,10 +1106,7 @@ async function chargerMSADS() {
   tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);">⏳ Chargement…</td></tr>';
   try {
     const records = await fetchDossiers();
-    const liste = records.filter(r => {
-      const sessions = r.fields['fldEg6m9OTCN6mCVT'] || [];
-      return sessions.includes(SESSION_MSADS);
-    });
+    const liste = records.filter(r => getSessionIds(r).includes(SESSION_MSADS));
     tbody.innerHTML = '';
     if (liste.length === 0) {
       tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);">Aucun stagiaire MSADS</td></tr>';
@@ -1132,10 +1137,7 @@ async function chargerCIP() {
   tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gris-text);">⏳ Chargement…</td></tr>';
   try {
     const records = await fetchDossiers();
-    const liste = records.filter(r => {
-      const sessions = r.fields['fldEg6m9OTCN6mCVT'] || [];
-      return sessions.includes(SESSION_CIP);
-    });
+    const liste = records.filter(r => getSessionIds(r).includes(SESSION_CIP));
     tbody.innerHTML = '';
     if (liste.length === 0) {
       tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--gris-text);">Aucun stagiaire CIP enregistré</td></tr>';
