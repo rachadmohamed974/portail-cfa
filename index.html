@@ -230,9 +230,7 @@
     <div class="stat"><div class="stat-val" id="msads-hentreprise">56h</div><div class="stat-label">Heures entreprise</div></div>
   </div>
   <div class="cert-grid">
-    <div class="cert-card"><div class="cert-title">MSADS</div><div class="cert-sub">3AIM CFA</div></div>
-    <div class="cert-card"><div class="cert-title">CIP</div><div class="cert-sub">EF SARL EXIMUS</div></div>
-    <div class="cert-card"><div class="cert-title">AMIS</div><div class="cert-sub">FCA REUNION</div></div>
+
   </div>
   <div class="section-title">Outils de la session</div>
   <div class="tools-grid">
@@ -1241,6 +1239,16 @@ async function chargerCIP() {
       });
     }
     document.getElementById('cip-stagiaires').textContent = liste.length;
+    // Charger les infos de la session CIP
+    try {
+      const sRes = await fetch('https://api.airtable.com/v0/appQjS0otb8VrzUxN/tbl9wSzQNKDMtKybL/' + SESSION_CIP, { headers: AT2_HEADERS });
+      const sJson = await sRes.json();
+      const sf = sJson.fields || {};
+      const hc = document.getElementById('cip-hcentre');
+      const he = document.getElementById('cip-hentreprise');
+      if (hc) hc.textContent = sf['DUREE_CENTRE'] || '-';
+      if (he) he.textContent = sf['DUREE_ENTREPRISE'] || '-';
+    } catch(e) {}
     const titresCIP = document.querySelectorAll('#page-cip .section-title');
     titresCIP.forEach(el => { if (el.textContent.includes('Stagiaires')) el.textContent = 'Stagiaires CIP - ' + liste.length + ' enregistré(s)'; });
   } catch(e) {
