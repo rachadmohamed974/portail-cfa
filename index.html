@@ -781,8 +781,8 @@ function filtrerStagiaires() {
   const st = document.getElementById('stag-filtre-statut').value;
   stagiairesAffiches = stagiairesBruts.filter(r => {
     const f = r.fields;
-    const nom = ((f['fldInoAtKUQEe79tu'] || f['Nom'] || '') + ' ' + (f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '')).toLowerCase();
-    const statut = f['fldUElLvIRMsaWtR0'] || f['Statut'] || '';
+    const nom = ((f['Nom'] || f['Nom'] || '') + ' ' + (f['Prénom'] || f['Prénom'] || '')).toLowerCase();
+    const statut = f['Statut dossier'] || f['Statut'] || '';
     return (!q || nom.includes(q)) && (!st || statut === st);
   });
   const actifs = stagiairesBruts.filter(r => (r.fields['fldUElLvIRMsaWtR0'] || r.fields['Statut'] || '') === 'Dossier reçu').length;
@@ -803,13 +803,13 @@ function afficherFiches() {
   const champsConnus = new Set(['fldInoAtKUQEe79tu','fldbfqiqWVGpuIn1G','fldA4KbyrAzgTOmGX','fldEc3ZXdoyYDhnce','fldKVdFnLOhRYe1iV','fldneYAvxUv7LEqUY','fldUElLvIRMsaWtR0','Nom','Prénom','Email','Téléphone','Adresse','Date de naissance','Statut']);
   stagiairesAffiches.forEach(record => {
     const f = record.fields;
-    const nom = f['fldInoAtKUQEe79tu'] || f['Nom'] || '-';
-    const prenom = f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '-';
+    const nom = f['Nom'] || f['Nom'] || '-';
+    const prenom = f['Prénom'] || f['Prénom'] || '-';
     const email = f['fldA4KbyrAzgTOmGX'] || f['Email'] || '-';
     const tel = f['fldEc3ZXdoyYDhnce'] || f['Téléphone'] || '-';
     const adresse = f['fldKVdFnLOhRYe1iV'] || f['Adresse'] || '-';
     const ddn = f['fldneYAvxUv7LEqUY'] || f['Date de naissance'] || '-';
-    const statut = f['fldUElLvIRMsaWtR0'] || f['Statut'] || 'Non renseigné';
+    const statut = f['Statut dossier'] || f['Statut'] || 'Non renseigné';
     const initiales = ((nom[0]||'') + (prenom[0]||'')).toUpperCase();
     let badgeClass = 'badge-plan';
     if (statut === 'Dossier reçu') badgeClass = 'badge-active';
@@ -844,7 +844,7 @@ function ouvrirModal(recordId) {
   recordEnCours = stagiairesBruts.find(r => r.id === recordId);
   if (!recordEnCours) return;
   const f = recordEnCours.fields;
-  document.getElementById('modal-titre').textContent = (f['fldInoAtKUQEe79tu'] || f['Nom'] || '') + ' ' + (f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '');
+  document.getElementById('modal-titre').textContent = (f['Nom'] || f['Nom'] || '') + ' ' + (f['Prénom'] || f['Prénom'] || '');
   document.getElementById('modal-sous-titre').textContent = recordId;
   const body = document.getElementById('modal-body');
   body.innerHTML = '';
@@ -935,8 +935,8 @@ function ouvrirModalDocs(recordId) {
   recordDocEnCours = stagiairesBruts.find(r => r.id === recordId);
   if (!recordDocEnCours) return;
   const f = recordDocEnCours.fields;
-  const nom = f['fldInoAtKUQEe79tu'] || f['Nom'] || '';
-  const prenom = f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '';
+  const nom = f['Nom'] || f['Nom'] || '';
+  const prenom = f['Prénom'] || f['Prénom'] || '';
   document.getElementById('docs-modal-titre').textContent = '📄 Documents - ' + nom + ' ' + prenom;
   document.getElementById('docs-modal-sous-titre').textContent = recordId;
   document.getElementById('docs-script-url').value = getScriptUrl();
@@ -952,8 +952,8 @@ function buildPayload(typeDoc) {
   return {
     action: 'genererPDF', typeDoc: typeDoc,
     balises: {
-      NOM: f['fldInoAtKUQEe79tu'] || f['Nom'] || '',
-      PRENOM: f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '',
+      NOM: f['Nom'] || f['Nom'] || '',
+      PRENOM: f['Prénom'] || f['Prénom'] || '',
       EMAIL: f['fldA4KbyrAzgTOmGX'] || f['Email'] || '',
       TELEPHONE: f['fldEc3ZXdoyYDhnce'] || f['Téléphone'] || '',
       ADRESSE: f['fldKVdFnLOhRYe1iV'] || f['Adresse'] || '',
@@ -977,8 +977,8 @@ function genererDocument(typeDoc) {
   const statusEl = item ? item.querySelector('.doc-gen-status') : null;
   const config   = DOCS_CONFIG[typeDoc];
   const f        = recordDocEnCours.fields;
-  const nom      = f['fldInoAtKUQEe79tu'] || f['Nom'] || 'Stagiaire';
-  const prenom   = f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '';
+  const nom      = f['Nom'] || f['Nom'] || 'Stagiaire';
+  const prenom   = f['Prénom'] || f['Prénom'] || '';
 
   if (statusEl) { statusEl.style.display = 'block'; statusEl.style.background = '#fffbeb'; statusEl.style.color = '#92400e'; statusEl.textContent = '⏳ Génération en cours…'; }
   if (btn) { btn.disabled = true; btn.textContent = '⏳'; }
@@ -1064,10 +1064,10 @@ async function fetchDossiers() {
   do {
     let url = 'https://api.airtable.com/v0/' + AT2_BASE + '/' + AT2_TABLE
       + '?pageSize=100'
-      + '&fields[]=fldInoAtKUQEe79tu'
-      + '&fields[]=fldbfqiqWVGpuIn1G'
-      + '&fields[]=fldUElLvIRMsaWtR0'
-      + '&fields[]=fldEg6m9OTCN6mCVT';
+      + '&fields[]=Nom'
+      + '&fields[]=Pr%C3%A9nom'
+      + '&fields[]=Statut%20dossier'
+      + '&fields[]=Session';
     if (offset) url += '&offset=' + offset;
     const res = await fetch(url, { headers: AT2_HEADERS });
     const json = await res.json();
@@ -1078,8 +1078,7 @@ async function fetchDossiers() {
 }
 
 function getSessionIds(record) {
-  // Le champ Session retourne un tableau de record IDs (strings)
-  const val = record.fields['fldEg6m9OTCN6mCVT'];
+  const val = record.fields['Session'];
   if (!val) return [];
   if (Array.isArray(val)) return val.map(v => typeof v === 'object' ? v.id || v : v);
   return [val];
@@ -1113,9 +1112,9 @@ async function chargerMSADS() {
     } else {
       liste.forEach(r => {
         const f = r.fields;
-        const nom = (f['fldInoAtKUQEe79tu'] || '').toUpperCase();
-        const prenom = f['fldbfqiqWVGpuIn1G'] || '';
-        const statut = f['fldUElLvIRMsaWtR0'] || '-';
+        const nom = (f['Nom'] || '').toUpperCase();
+        const prenom = f['Prénom'] || '';
+        const statut = f['Statut dossier'] || '-';
         const ini = initiales(nom, prenom);
         const tr = document.createElement('tr');
         tr.innerHTML = '<td><span class="initial-circle">' + ini + '</span>' + nom + ' ' + prenom + '</td>'
@@ -1144,9 +1143,9 @@ async function chargerCIP() {
     } else {
       liste.forEach(r => {
         const f = r.fields;
-        const nom = (f['fldInoAtKUQEe79tu'] || '').toUpperCase();
-        const prenom = f['fldbfqiqWVGpuIn1G'] || '';
-        const statut = f['fldUElLvIRMsaWtR0'] || '-';
+        const nom = (f['Nom'] || '').toUpperCase();
+        const prenom = f['Prénom'] || '';
+        const statut = f['Statut dossier'] || '-';
         const ini = initiales(nom, prenom);
         const tr = document.createElement('tr');
         tr.innerHTML = '<td><span class="initial-circle">' + ini + '</span>' + nom + ' ' + prenom + '</td>'
