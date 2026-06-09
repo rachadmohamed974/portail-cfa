@@ -730,7 +730,7 @@ async function syncDepuisSheets() {
 async function chargerTitresSessions() {
   try {
     const url = 'https://api.airtable.com/v0/appQjS0otb8VrzUxN/tbl9wSzQNKDMtKybL'
-      + '?pageSize=100&fields[]=Session%20de%20formation&fields[]=INTITULE_FORMATION&sort[0][field]=Session%20de%20formation&sort[0][direction]=asc';
+      + '?pageSize=100&fields[]=INTITULE_FORMATION&fields[]=REF_DOSSIER&sort[0][field]=REF_DOSSIER&sort[0][direction]=asc';
     const res = await fetch(url, { headers: { 'Authorization': 'Bearer patGfdRWpbwsnb3Gu.b43f490cd943925747c24e80c4b65281f2b59781b2ae1e3fe5bac00e4609ad21' } });
     const json = await res.json();
     const sessions = json.records || [];
@@ -738,14 +738,14 @@ async function chargerTitresSessions() {
       const s1 = sessions[0].fields;
       const t1 = document.getElementById('msads-titre');
       const st1 = document.getElementById('msads-sous-titre');
-      if (t1) t1.textContent = s1['Session de formation'] || 'Session 01';
+      if (t1) t1.textContent = 'Session 01';
       if (st1) st1.textContent = s1['INTITULE_FORMATION'] || '';
     }
     if (sessions[1]) {
       const s2 = sessions[1].fields;
       const t2 = document.getElementById('cip-titre');
       const st2 = document.getElementById('cip-sous-titre');
-      if (t2) t2.textContent = s2['Session de formation'] || 'Session 02';
+      if (t2) t2.textContent = 'Session 02';
       if (st2) st2.textContent = s2['INTITULE_FORMATION'] || '';
     }
   } catch(e) { console.log('Erreur titres sessions:', e.message); }
