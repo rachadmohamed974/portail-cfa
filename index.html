@@ -613,7 +613,7 @@ function appliquerDonnees(data) {
   document.getElementById('stat-sessions').textContent = data.sessions;
   document.getElementById('stat-jours').textContent = data.jours;
   document.getElementById('stat-hcentre').textContent = data.hcentre;
-  document.getElementById('msads-stagiaires').textContent = data.stagiaires;
+  // msads-stagiaires est géré par chargerMSADS depuis Airtable
   document.getElementById('msads-jours').textContent = data.jours;
   document.getElementById('msads-hcentre').textContent = data.hcentre;
   document.getElementById('msads-hentreprise').textContent = data.hentreprise;
