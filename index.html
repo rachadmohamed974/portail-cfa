@@ -1044,24 +1044,32 @@ async function genererTousDocuments() {
 
 document.getElementById('docs-modal').addEventListener('click', function(e) { if (e.target === this) fermerModalDocs(); });
 
-
 // ═══════════════════════════════════════════════════════
-// ONGLETS MSADS & CIP — Airtable live (auto-refresh)
+// MSADS & CIP — Airtable live
 // ═══════════════════════════════════════════════════════
 
-const SESSION_MSADS_ID = 'recazpDtJbBtbdpyf'; // ← sera remplacé si besoin
-const SESSION_CIP_ID   = 'recazpDtJbBtbdpyf';
+const AT2_PAT     = 'patGfdRWpbwsnb3Gu.b43f490cd943925747c24e80c4b65281f2b59781b2ae1e3fe5bac00e4609ad21';
+const AT2_BASE    = 'appQjS0otb8VrzUxN';
+const AT2_TABLE   = 'tblt5Ey4PNiEpdpNb';
+const AT2_HEADERS = { 'Authorization': 'Bearer ' + AT2_PAT };
 
-// Champ Session dans Dossiers Apprentis = fldEg6m9OTCN6mCVT
-// On filtre en récupérant tous les dossiers puis on filtre côté client
+// IDs des sessions
+const SESSION_MSADS = 'recRfcQIkKBRYq8q5';
+const SESSION_CIP   = 'recazpDtJbBtbdpyf';
 
-async function chargerDossiersSessions() {
-  const url = 'https://api.airtable.com/v0/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb?pageSize=100&fields[]=fldInoAtKUQEe79tu&fields[]=fldbfqiqWVGpuIn1G&fields[]=fldUElLvIRMsaWtR0&fields[]=fldneYAvxUv7LEqUY&fields[]=fldEg6m9OTCN6mCVT&fields[]=fldvoW7icAko4d5mr&fields[]=fld7e2GVH6hlF92lJ';
-  const headers = { 'Authorization': 'Bearer ' + AT_PAT };
+// Champ Session dans Dossiers Apprentis = fldEg6m9OTCN6mCVT (multipleRecordLinks)
+
+async function fetchDossiers() {
   let records = [], offset = null;
   do {
-    let u = url; if (offset) u += '&offset=' + offset;
-    const res = await fetch(u, { headers });
+    let url = 'https://api.airtable.com/v0/' + AT2_BASE + '/' + AT2_TABLE
+      + '?pageSize=100'
+      + '&fields[]=fldInoAtKUQEe79tu'
+      + '&fields[]=fldbfqiqWVGpuIn1G'
+      + '&fields[]=fldUElLvIRMsaWtR0'
+      + '&fields[]=fldEg6m9OTCN6mCVT';
+    if (offset) url += '&offset=' + offset;
+    const res = await fetch(url, { headers: AT2_HEADERS });
     const json = await res.json();
     records = records.concat(json.records || []);
     offset = json.offset;
@@ -1070,51 +1078,33 @@ async function chargerDossiersSessions() {
 }
 
 function initiales(nom, prenom) {
-  const n = (nom || '').charAt(0).toUpperCase();
-  const p = (prenom || '').charAt(0).toUpperCase();
-  return n + p;
+  return ((nom||'').charAt(0) + (prenom||'').charAt(0)).toUpperCase();
 }
 
-function formatDateFR(iso) {
-  if (!iso) return '—';
-  const [y,m,d] = iso.split('-');
-  return (d||'??) + '/' + (m||'??') + '/' + (y||'??');
-}
-
-function statutBadge(statut) {
-  if (!statut) return '<span class="badge" style="background:#f3f4f6;color:#6b7280;">—</span>';
-  const s = statut.toLowerCase();
-  if (s.includes('cours') || s.includes('reçu') || s.includes('actif')) 
-    return '<span class="badge badge-active">' + statut + '</span>';
-  if (s.includes('prépara') || s.includes('attente'))
-    return '<span class="badge badge-warning">' + statut + '</span>';
-  return '<span class="badge" style="background:#f3f4f6;color:#374151;">' + statut + '</span>';
+function statutBadge(s) {
+  if (!s) return '<span class="badge" style="background:#f3f4f6;color:#6b7280;">—</span>';
+  const sl = s.toLowerCase();
+  if (sl.includes('cours') || sl.includes('reçu') || sl.includes('actif'))
+    return '<span class="badge badge-active">' + s + '</span>';
+  if (sl.includes('prépara') || sl.includes('attente'))
+    return '<span class="badge badge-warning">' + s + '</span>';
+  return '<span class="badge" style="background:#f3f4f6;color:#374151;">' + s + '</span>';
 }
 
 async function chargerMSADS() {
-  const tbodyId = 'tbody-stagiaires';
-  const tbody = document.getElementById(tbodyId);
+  const tbody = document.getElementById('tbody-stagiaires');
   const titreEl = document.getElementById('titre-stagiaires');
   if (!tbody) return;
-  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);font-size:13px;">⏳ Chargement depuis Airtable…</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);">⏳ Chargement…</td></tr>';
   try {
-    const records = await chargerDossiersSessions();
-    // Filtrer : fldEg6m9OTCN6mCVT (Session) contient un lien vers Sessions TP MSADS
-    // On filtre sur fld7e2GVH6hlF92lJ = "Copie de Sessions TP MSADS" qui est un multipleRecordLinks
-    const msads = records.filter(r => {
-      const sessions = r.fields['fld7e2GVH6hlF92lJ'] || r.fields['fldEg6m9OTCN6mCVT'] || [];
-      // Si le champ Session général est utilisé, inclure tous ceux qui ne sont pas CIP
-      const sessionsCIP = r.fields['fldvoW7icAko4d5mr'] || [];
-      return sessions.length > 0 && sessionsCIP.length === 0;
-    });
-    // Fallback : si filtrage vide, prendre ceux sans lien CIP et avec session
-    const liste = msads.length > 0 ? msads : records.filter(r => {
-      const cip = r.fields['fldvoW7icAko4d5mr'] || [];
-      return cip.length === 0;
+    const records = await fetchDossiers();
+    const liste = records.filter(r => {
+      const sessions = r.fields['fldEg6m9OTCN6mCVT'] || [];
+      return sessions.includes(SESSION_MSADS);
     });
     tbody.innerHTML = '';
     if (liste.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);font-size:13px;">Aucun stagiaire MSADS trouvé</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);">Aucun stagiaire MSADS</td></tr>';
     } else {
       liste.forEach(r => {
         const f = r.fields;
@@ -1129,31 +1119,28 @@ async function chargerMSADS() {
         tbody.appendChild(tr);
       });
     }
-    const nb = liste.length;
-    document.getElementById('msads-stagiaires').textContent = nb;
-    document.getElementById('stat-apprenants').textContent = nb;
-    if (titreEl) titreEl.textContent = 'Stagiaires MSADS — ' + nb + ' enregistré(s)';
+    document.getElementById('msads-stagiaires').textContent = liste.length;
+    if (titreEl) titreEl.textContent = 'Stagiaires MSADS — ' + liste.length + ' enregistré(s)';
   } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:#dc2626;font-size:13px;">⚠️ Erreur Airtable : ' + e.message + '</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:#dc2626;">⚠️ ' + e.message + '</td></tr>';
   }
 }
 
 async function chargerCIP() {
   const tbody = document.getElementById('tbody-stagiaires-cip');
   if (!tbody) return;
-  tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gris-text);font-size:13px;">⏳ Chargement depuis Airtable…</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gris-text);">⏳ Chargement…</td></tr>';
   try {
-    const records = await chargerDossiersSessions();
-    // Filtrer : fldvoW7icAko4d5mr = "Copie de Sessions TP CIP"
-    const cip = records.filter(r => {
-      const sessions = r.fields['fldvoW7icAko4d5mr'] || [];
-      return sessions.length > 0;
+    const records = await fetchDossiers();
+    const liste = records.filter(r => {
+      const sessions = r.fields['fldEg6m9OTCN6mCVT'] || [];
+      return sessions.includes(SESSION_CIP);
     });
     tbody.innerHTML = '';
-    if (cip.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--gris-text);font-size:13px;">Aucun stagiaire CIP enregistré</td></tr>';
+    if (liste.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--gris-text);">Aucun stagiaire CIP enregistré</td></tr>';
     } else {
-      cip.forEach(r => {
+      liste.forEach(r => {
         const f = r.fields;
         const nom = (f['fldInoAtKUQEe79tu'] || '').toUpperCase();
         const prenom = f['fldbfqiqWVGpuIn1G'] || '';
@@ -1162,24 +1149,19 @@ async function chargerCIP() {
         const tr = document.createElement('tr');
         tr.innerHTML = '<td><span class="initial-circle">' + ini + '</span>' + nom + ' ' + prenom + '</td>'
           + '<td>10/08/2026</td><td>' + statutBadge(statut) + '</td>'
-          + '<td><a href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/' + r.id + '" target="_blank" style="font-size:12px;color:var(--bleu);">Voir dossier →</a></td>';
+          + '<td><a href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/' + r.id + '" target="_blank" style="font-size:12px;color:var(--bleu);">Voir →</a></td>';
         tbody.appendChild(tr);
       });
     }
-    const nb = cip.length;
-    document.getElementById('cip-stagiaires').textContent = nb;
-    const titreEl = document.querySelector('#page-cip .section-title');
-    if (titreEl && titreEl.textContent.includes('Stagiaires')) 
-      titreEl.textContent = 'Stagiaires CIP — ' + nb + ' enregistré(s)';
+    document.getElementById('cip-stagiaires').textContent = liste.length;
+    const titresCIP = document.querySelectorAll('#page-cip .section-title');
+    titresCIP.forEach(el => { if (el.textContent.includes('Stagiaires')) el.textContent = 'Stagiaires CIP — ' + liste.length + ' enregistré(s)'; });
   } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:#dc2626;font-size:13px;">⚠️ Erreur Airtable : ' + e.message + '</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:#dc2626;">⚠️ ' + e.message + '</td></tr>';
   }
 }
 
-let msadsLoaded = false;
-let cipLoaded = false;
-
-let stagLoaded = false;
+let stagLoaded = false, msadsLoaded = false, cipLoaded = false;
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', function() {
     if (this.textContent.includes('Stagiaires') && !stagLoaded) { stagLoaded = true; chargerStagiaires(); }
