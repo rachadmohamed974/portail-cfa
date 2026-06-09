@@ -947,12 +947,28 @@ document.getElementById('stag-modal').addEventListener('click', function(e) { if
 // GÉNÉRATION DOCUMENTS PDF — séquentielle
 // ═══════════════════════════════════════
 const DOCS_CONFIG = {
-  livret:     { label: 'Livret stagiaire',     templateId: '1w2-q6562rauFIjaP0r1VJqu0BTyugQ4_HtxEOyJ6MfA' },
-  convocation:{ label: 'Convocation',          templateId: '1AXN63GqXc4_-Fg9y12HnmtS0LIqyqSGKRJpuPFoE4OE' },
-  contrat:    { label: 'Contrat de formation', templateId: '11g_SpGkwnTRP-DaCd3_8_rbcm_Pb1jarxR-v-ne5Cm0'  },
-  convention: { label: 'Convention de stage',  templateId: '1QMWzrjf7TrFfKri495I8b3d0Kr6NLIu4_66Os1e17Ts'  },
-  reglement:  { label: 'Règlement intérieur',  templateId: '1l8GvVeWS_siQq5iUG71jhLjILK2qSm6wcC5YKYJBGRk'  },
+  livret:     { label: 'Livret stagiaire',     gabaritField: 'GABARIT_LIVRET' },
+  convocation:{ label: 'Convocation',          gabaritField: 'GABARIT_CONVOCATION' },
+  contrat:    { label: 'Contrat de formation', gabaritField: 'GABARIT_CONTRAT' },
+  convention: { label: 'Convention de stage',  gabaritField: 'GABARIT_CONVENTION' },
+  reglement:  { label: 'Règlement intérieur',  gabaritField: 'GABARIT_REGLEMENT' },
+  attestation:{ label: 'Attestation entrée',   gabaritField: 'GABARIT_ATTESTATION' },
 };
+
+// Cache des données de session par record ID
+const sessionCache = {};
+
+async function chargerSessionDuStagiaire(sessionId) {
+  if (!sessionId) return null;
+  if (sessionCache[sessionId]) return sessionCache[sessionId];
+  try {
+    const url = 'https://api.airtable.com/v0/appQjS0otb8VrzUxN/tbl9wSzQNKDMtKybL/' + sessionId;
+    const res = await fetch(url, { headers: { 'Authorization': 'Bearer patGfdRWpbwsnb3Gu.b43f490cd943925747c24e80c4b65281f2b59781b2ae1e3fe5bac00e4609ad21' } });
+    const json = await res.json();
+    sessionCache[sessionId] = json.fields || {};
+    return sessionCache[sessionId];
+  } catch(e) { return null; }
+}
 
 let recordDocEnCours = null;
 const SCRIPT_URL_PDF = 'https://script.google.com/macros/s/AKfycbwR9cvC-SsgJ4e4kMoQEp92CF3ULqpmZAUojqg8ONaK8Eo4_WWkQiCtwDAfI9J2eV4yNg/exec';
@@ -979,43 +995,73 @@ function ouvrirModalDocs(recordId) {
 }
 function fermerModalDocs() { document.getElementById('docs-modal').style.display = 'none'; recordDocEnCours = null; }
 
-function buildPayload(typeDoc) {
+async function buildPayload(typeDoc, sessionFields) {
   const f = recordDocEnCours.fields;
+  const s = sessionFields || {};
+  const config = DOCS_CONFIG[typeDoc];
+  const templateId = s[config.gabaritField] || '';
   return {
     action: 'genererPDF', typeDoc: typeDoc,
+    templateId: templateId,
     balises: {
       NOM: f['fldInoAtKUQEe79tu'] || f['Nom'] || '',
       PRENOM: f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '',
+      NOM_PRENOM: (f['fldInoAtKUQEe79tu'] || '') + ' ' + (f['fldbfqiqWVGpuIn1G'] || ''),
+      NOM_PRENOM_STAGIAIRE: (f['fldInoAtKUQEe79tu'] || '') + ' ' + (f['fldbfqiqWVGpuIn1G'] || ''),
       EMAIL: f['fldA4KbyrAzgTOmGX'] || f['Email'] || '',
+      EMAIL_STAGIAIRE: f['fldA4KbyrAzgTOmGX'] || f['Email'] || '',
       TELEPHONE: f['fldEc3ZXdoyYDhnce'] || f['Téléphone'] || '',
+      TEL_STAGIAIRE: f['fldEc3ZXdoyYDhnce'] || f['Téléphone'] || '',
       ADRESSE: f['fldKVdFnLOhRYe1iV'] || f['Adresse'] || '',
+      ADRESSE_STAGIAIRE: f['fldKVdFnLOhRYe1iV'] || f['Adresse'] || '',
       DATE_NAISSANCE: f['fldneYAvxUv7LEqUY'] || f['Date de naissance'] || '',
-      INTITULE_FORMATION: 'TP Médiateur Social Accès aux Droits et aux Services',
-      NIVEAU: 'Niveau 4', DUREE_TOTALE: '775h', DUREE_CENTRE: '530h', DUREE_ENTREPRISE: '56h',
-      DATE_DEBUT: '08/06/2026', DATE_FIN: '27/11/2026',
-      LIEU_FORMATION: '109 Lotissement les Lilas, 97440 Saint-André',
-      MODE_FORMATION: 'Présentiel',
+      DDN_STAGIAIRE: f['fldneYAvxUv7LEqUY'] || f['Date de naissance'] || '',
+      INTITULE_FORMATION: s['INTITULE_FORMATION'] || '',
+      NIVEAU: s['NIVEAU'] || '',
+      NIVEAU_FORMATION: s['NIVEAU'] || '',
+      CODE_FORMATION: s['CODE_FORMATION'] || '',
+      DUREE_TOTALE: s['DUREE_TOTALE'] || '',
+      DUREE_FORMATION: s['DUREE_TOTALE'] || '',
+      DUREE_CENTRE: s['DUREE_CENTRE'] || '',
+      H_CENTRE: s['DUREE_CENTRE'] || '',
+      DUREE_ENTREPRISE: s['DUREE_ENTREPRISE'] || '',
+      H_ENTREPRISE: s['DUREE_ENTREPRISE'] || '',
+      DATE_DEBUT: s['Date début'] ? new Date(s['Date début']).toLocaleDateString('fr-FR') : '',
+      DATE_FIN: s['Date fin'] ? new Date(s['Date fin']).toLocaleDateString('fr-FR') : '',
+      DATE_debut: new Date().toLocaleDateString('fr-FR'),
       DATE_DOCUMENT: new Date().toLocaleDateString('fr-FR'),
+      DATE_BILAN_FINAL: s['Date fin'] ? new Date(s['Date fin']).toLocaleDateString('fr-FR') : '',
+      LIEU_FORMATION: s['LIEU_FORMATION'] || '',
+      REF_DOSSIER: s['REF_DOSSIER'] || '',
+      NOM_STAGIAIRE: f['fldInoAtKUQEe79tu'] || f['Nom'] || '',
+      PRENOM_STAGIAIRE: f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '',
     }
   };
 }
 
 // Génère un doc : fetch → blob → download direct. Fallback window.open si CORS.
-function genererDocument(typeDoc) {
-  if (!recordDocEnCours) return Promise.resolve(false);
+async function genererDocument(typeDoc) {
+  if (!recordDocEnCours) return false;
   const scriptUrl = getScriptUrl();
   const item     = document.querySelector('.doc-gen-item[data-doc="' + typeDoc + '"]');
   const btn      = item ? item.querySelector('.btn-gen') : null;
   const statusEl = item ? item.querySelector('.doc-gen-status') : null;
-  const config   = DOCS_CONFIG[typeDoc];
   const f        = recordDocEnCours.fields;
   const nom      = f['fldInoAtKUQEe79tu'] || f['Nom'] || 'Stagiaire';
   const prenom   = f['fldbfqiqWVGpuIn1G'] || f['Prénom'] || '';
 
-  if (statusEl) { statusEl.style.display = 'block'; statusEl.style.background = '#fffbeb'; statusEl.style.color = '#92400e'; statusEl.textContent = '⏳ Génération en cours…'; }
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.style.background = '#fffbeb'; statusEl.style.color = '#92400e'; statusEl.textContent = '⏳ Chargement session…'; }
   if (btn) { btn.disabled = true; btn.textContent = '⏳'; }
 
-  const url = scriptUrl + '?payload=' + encodeURIComponent(JSON.stringify(buildPayload(typeDoc)));
+  // Charger la session du stagiaire
+  const sessionIds = f['fldEg6m9OTCN6mCVT'] || f['Session'] || [];
+  const sessionId = Array.isArray(sessionIds) ? sessionIds[0] : sessionIds;
+  const sessionFields = await chargerSessionDuStagiaire(sessionId);
+
+  if (statusEl) statusEl.textContent = '⏳ Génération en cours…';
+
+  const payload = await buildPayload(typeDoc, sessionFields);
+  const url = scriptUrl + '?payload=' + encodeURIComponent(JSON.stringify(payload));
 
   return fetch(url)
     .then(res => {
