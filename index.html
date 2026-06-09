@@ -152,8 +152,7 @@
 <!-- NAV -->
 <div class="nav">
   <div class="nav-item active" onclick="showPage('accueil',this)">🏠 Accueil</div>
-  <div class="nav-item" onclick="showPage('msads',this)">MSADS 2026 <span class="nav-badge">J+1</span></div>
-  <div class="nav-item" onclick="showPage('cip',this)">CIP 2026</div>
+  <div id="nav-sessions"></div>
   <div class="nav-item" onclick="showPage('courtes',this)">Formations courtes</div>
   <div class="nav-item" onclick="showPage('qualiopi',this)">Qualiopi</div>
   <div class="nav-item" onclick="showPage('veille',this)">Veille réglementaire</div>
@@ -212,108 +211,7 @@
 </div>
 </div>
 
-<!-- PAGE MSADS -->
-<div id="page-msads" class="page">
-<div class="main">
-  <div class="page-header">
-    <div>
-      <p style="font-size:12px;color:var(--gris-text);margin-bottom:3px;">Session en cours</p>
-      <h2>MSADS 2026</h2>
-      <p>Médiateur Social Accès aux Droits et aux Services · TP-00398</p>
-    </div>
-    <span class="badge badge-active" style="font-size:12px;padding:6px 14px;" id="msads-periode">8 juin → 27 nov. 2026</span>
-  </div>
-  <div class="stats">
-    <div class="stat"><div class="stat-val" id="msads-stagiaires">9</div><div class="stat-label">Stagiaires</div></div>
-    <div class="stat"><div class="stat-val" id="msads-jours">71</div><div class="stat-label">Jours de formation</div></div>
-    <div class="stat"><div class="stat-val orange" id="msads-hcentre">530h</div><div class="stat-label">Heures centre</div></div>
-    <div class="stat"><div class="stat-val" id="msads-hentreprise">56h</div><div class="stat-label">Heures entreprise</div></div>
-  </div>
-  <div class="cert-grid">
-    <div class="cert-card"><div class="cert-title">MSADS</div><div class="cert-sub">3AIM CFA</div></div>
-    <div class="cert-card"><div class="cert-title">CIP</div><div class="cert-sub">EF SARL EXIMUS</div></div>
-    <div class="cert-card"><div class="cert-title">AMIS</div><div class="cert-sub">FCA REUNION</div></div>
-  </div>
-  <div class="section-title">Outils de la session</div>
-  <div class="tools-grid">
-    <a class="tool-card" href="https://docs.google.com/spreadsheets/d/1Br82lRuPj5fhBeEIrBeHgLNKTm3jFE0s5IfYQqa-8bE/edit" target="_blank"><div class="tool-icon ic-sheets">📊</div><div><div class="tool-name">Planning MSADS</div><div class="tool-sub">Juin – Nov. 2026 · 775h</div></div></a>
-    <a class="tool-card" href="https://docs.google.com/spreadsheets/d/167Up7WEjTr-2mCWLt0yrK-jkuhzdBhld97Wt8ICslGQ/edit" target="_blank"><div class="tool-icon ic-sheets">📋</div><div><div class="tool-name">Suivi accompagnement</div><div class="tool-sub">4 stagiaires · 52 entretiens</div></div></a>
-    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/viwS31g6Uovqx0f59?blocks=hide" target="_blank"><div class="tool-icon ic-at">🗄</div><div><div class="tool-name">Airtable — Dossiers</div><div class="tool-sub">appQjS0otb8VrzUxN</div></div></a>
-    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank"><div class="tool-icon ic-drive">📁</div><div><div class="tool-name">Drive stagiaires</div><div class="tool-sub">2026/MSADS/STAGIAIRES/</div></div></a>
-    <a class="tool-card" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank"><div class="tool-icon ic-make">⚙️</div><div><div class="tool-name">Make — Scénario 6018789</div><div class="tool-sub">Génération documents auto.</div></div></a>
-    <a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank"><div class="tool-icon ic-gmail">✉️</div><div><div class="tool-name">Gmail</div><div class="tool-sub">contact@3aim.fr</div></div></a>
-  </div>
-  <div class="section-title">📋 Questionnaires stagiaires MSADS</div>
-  <div class="tools-grid">
-    <a class="tool-card" href="https://docs.google.com/forms/d/e/1FAIpQLSft-vAkmcLXNN5RMRQOqbxwUPmjkmvJDCPUT-6ab4ZlsU5gfw/viewform" target="_blank"><div class="tool-icon ic-sheets">📝</div><div><div class="tool-name">Inscription MSADS</div><div class="tool-sub">Formulaire candidats · Niveau 4</div></div></a>
-    <a class="tool-card" href="#" target="_blank" style="opacity:0.55;"><div class="tool-icon ic-sheets">⭐</div><div><div class="tool-name">Satisfaction à chaud</div><div class="tool-sub">À créer · Fin de formation</div></div></a>
-    <a class="tool-card" href="#" target="_blank" style="opacity:0.55;"><div class="tool-icon ic-sheets">📊</div><div><div class="tool-name">Satisfaction à froid</div><div class="tool-sub">À créer · 6 mois après</div></div></a>
-    <a class="tool-card" href="#" target="_blank" style="opacity:0.55;"><div class="tool-icon ic-sheets">🔎</div><div><div class="tool-name">Enquête insertion 6 mois</div><div class="tool-sub">À créer · Suivi post-formation</div></div></a>
-  </div>
-  <hr>
-  <div class="section-title" id="titre-stagiaires">Stagiaires — 4 enregistrés</div>
-  <table class="stagiaires-table">
-    <thead><tr><th>Nom prénom</th><th>Démarrage</th><th>Formation</th><th>Statut</th><th>Entretiens</th></tr></thead>
-    <tbody id="tbody-stagiaires">
-      <tr><td><span class="initial-circle">BA</span>BAO Ambulahi</td><td>08/06/2026</td><td>MSADS / CCP3 FPA</td><td><span class="badge badge-active">En cours</span></td><td style="font-family:DM Mono,monospace;font-size:12px;color:var(--gris-text)">0 / 13</td></tr>
-      <tr><td><span class="initial-circle">BE</span>BOYER Elodie</td><td>08/06/2026</td><td>MSADS / CCP3 FPA</td><td><span class="badge badge-active">En cours</span></td><td style="font-family:DM Mono,monospace;font-size:12px;color:var(--gris-text)">0 / 13</td></tr>
-      <tr><td><span class="initial-circle">TM</span>TANDRAYEN Marie</td><td>08/06/2026</td><td>MSADS / CCP3 FPA</td><td><span class="badge badge-active">En cours</span></td><td style="font-family:DM Mono,monospace;font-size:12px;color:var(--gris-text)">0 / 13</td></tr>
-      <tr><td><span class="initial-circle">MM</span>MANORO Marie Stéphania</td><td>08/06/2026</td><td>MSADS / CCP3 FPA</td><td><span class="badge badge-active">En cours</span></td><td style="font-family:DM Mono,monospace;font-size:12px;color:var(--gris-text)">0 / 13</td></tr>
-    </tbody>
-  </table>
-  <div class="section-title">Récapitulatif planning mensuel</div>
-  <div class="planning-month"><div class="planning-month-header"><span class="planning-month-name">Juin 2026</span><div class="planning-month-stats"><span>105h centre</span><span>0h entreprise</span><span>17 jours</span></div></div><div class="planning-month-body"><div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:100%"></div></div><div class="bar-legend"><div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 100%</div><div class="bar-legend-item"><div class="bar-dot" style="background:var(--orange)"></div>Entreprise 0%</div></div></div></div>
-  <div class="planning-month"><div class="planning-month-header"><span class="planning-month-name">Juillet 2026</span><div class="planning-month-stats"><span>68h centre</span><span>70h entreprise</span><span>23 jours</span></div></div><div class="planning-month-body"><div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:49%"></div></div><div class="bar-legend"><div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 49%</div><div class="bar-legend-item"><div class="bar-dot" style="background:var(--orange)"></div>Entreprise 51%</div></div></div></div>
-  <div class="planning-month"><div class="planning-month-header"><span class="planning-month-name">Août 2026</span><div class="planning-month-stats"><span>90h centre</span><span>42h entreprise</span><span>21 jours</span></div></div><div class="planning-month-body"><div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:68%"></div></div><div class="bar-legend"><div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 68%</div><div class="bar-legend-item"><div class="bar-dot" style="background:var(--orange)"></div>Entreprise 32%</div></div></div></div>
-  <div class="planning-month"><div class="planning-month-header"><span class="planning-month-name">Septembre 2026</span><div class="planning-month-stats"><span>90h centre</span><span>49h entreprise</span><span>22 jours</span></div></div><div class="planning-month-body"><div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:65%"></div></div><div class="bar-legend"><div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 65%</div><div class="bar-legend-item"><div class="bar-dot" style="background:var(--orange)"></div>Entreprise 35%</div></div></div></div>
-  <div class="planning-month"><div class="planning-month-header"><span class="planning-month-name">Octobre 2026</span><div class="planning-month-stats"><span>60h centre</span><span>84h entreprise</span><span>22 jours</span></div></div><div class="planning-month-body"><div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:42%"></div></div><div class="bar-legend"><div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 42%</div><div class="bar-legend-item"><div class="bar-dot" style="background:var(--orange)"></div>Entreprise 58%</div></div></div></div>
-  <div class="planning-month"><div class="planning-month-header"><span class="planning-month-name">Novembre 2026</span><div class="planning-month-stats"><span>117h centre</span><span>0h entreprise</span><span>20 jours</span></div></div><div class="planning-month-body"><div class="progress-bar-wrap"><div class="progress-bar bar-centre" style="width:100%"></div></div><div class="bar-legend"><div class="bar-legend-item"><div class="bar-dot" style="background:var(--bleu)"></div>Centre 100% — Examen 23/11</div></div></div></div>
-</div>
-</div>
-
-<!-- PAGE CIP 2026 -->
-<div id="page-cip" class="page">
-<div class="main">
-  <div class="page-header">
-    <div>
-      <p style="font-size:12px;color:var(--gris-text);margin-bottom:3px;">Session à venir</p>
-      <h2>CIP 2026</h2>
-      <p>Conseiller en Insertion Professionnelle · Niveau 5</p>
-    </div>
-    <span class="badge badge-warning" style="font-size:12px;padding:6px 14px;">En préparation</span>
-  </div>
-  <div class="stats">
-    <div class="stat"><div class="stat-val" id="cip-stagiaires">—</div><div class="stat-label">Stagiaires</div></div>
-    <div class="stat"><div class="stat-val orange" id="cip-hcentre">—</div><div class="stat-label">Heures centre</div></div>
-    <div class="stat"><div class="stat-val" id="cip-hentreprise">—</div><div class="stat-label">Heures entreprise</div></div>
-    <div class="stat"><div class="stat-val vert">Niveau 5</div><div class="stat-label">Bac+2 équivalent</div></div>
-  </div>
-  <div class="section-title">Outils de la session</div>
-  <div class="tools-grid">
-    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN/tblCuOTCGXik2xYBB/viw6X81pfX0Dc3IWP?blocks=hide" target="_blank"><div class="tool-icon ic-at">🗄</div><div><div class="tool-name">Sessions TP CIP</div><div class="tool-sub">tblCuOTCGXik2xYBB</div></div></a>
-    <a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/viwS31g6Uovqx0f59?blocks=hide" target="_blank"><div class="tool-icon ic-at">🗄</div><div><div class="tool-name">Dossiers Apprentis</div><div class="tool-sub">Table partagée MSADS/CIP/AMIS</div></div></a>
-    <a class="tool-card" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank"><div class="tool-icon ic-make">⚙️</div><div><div class="tool-name">Make — Automatisations</div><div class="tool-sub">Dossiers · Documents · Emails</div></div></a>
-    <a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank"><div class="tool-icon ic-drive">📁</div><div><div class="tool-name">Drive stagiaires</div><div class="tool-sub">2026/CIP/STAGIAIRES/</div></div></a>
-    <a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank"><div class="tool-icon ic-gmail">✉️</div><div><div class="tool-name">Gmail</div><div class="tool-sub">contact@3aim.fr</div></div></a>
-  </div>
-  <div class="section-title">📋 Questionnaires stagiaires CIP</div>
-  <div class="tools-grid">
-    <a class="tool-card" href="https://docs.google.com/forms/d/e/1FAIpQLSdYIJmtVAINv85L9PPq7NJ_syDjbArl_tKb3QUnrgh7Y7SMQg/viewform" target="_blank"><div class="tool-icon ic-sheets">📝</div><div><div class="tool-name">Inscription CIP</div><div class="tool-sub">Formulaire candidats · Niveau 5</div></div></a>
-    <a class="tool-card" href="#" target="_blank" style="opacity:0.55;"><div class="tool-icon ic-sheets">⭐</div><div><div class="tool-name">Satisfaction à chaud</div><div class="tool-sub">À créer · Fin de formation</div></div></a>
-    <a class="tool-card" href="#" target="_blank" style="opacity:0.55;"><div class="tool-icon ic-sheets">📊</div><div><div class="tool-name">Satisfaction à froid</div><div class="tool-sub">À créer · 6 mois après</div></div></a>
-    <a class="tool-card" href="#" target="_blank" style="opacity:0.55;"><div class="tool-icon ic-sheets">🔎</div><div><div class="tool-name">Enquête insertion 6 mois</div><div class="tool-sub">À créer · Suivi post-formation</div></div></a>
-  </div>
-  <hr>
-  <div class="section-title">Stagiaires CIP — 0 enregistrés</div>
-  <table class="stagiaires-table">
-    <thead><tr><th>Nom prénom</th><th>Démarrage</th><th>Statut</th><th>Dossier</th></tr></thead>
-    <tbody id="tbody-stagiaires-cip">
-      <tr><td colspan="4" style="text-align:center;padding:24px;color:var(--gris-text);font-size:13px;">Aucun stagiaire enregistré — les inscriptions sont ouvertes</td></tr>
-    </tbody>
-  </table>
-</div>
-</div>
-
+<div id="pages-sessions-container"></div>
 <!-- PAGE FORMATIONS COURTES -->
 <div id="page-courtes" class="page">
 <div class="main">
@@ -1054,15 +952,36 @@ const AT2_TABLE   = 'tblt5Ey4PNiEpdpNb';
 const AT2_HEADERS = { 'Authorization': 'Bearer ' + AT2_PAT };
 
 // IDs des sessions
-const SESSION_MSADS = 'recRfcQIkKBRYq8q5';
-const SESSION_CIP   = 'rec29Qg4T8XeBvazh';
+// ═══════════════════════════════════════════════════════
+// SESSIONS DYNAMIQUES — Airtable live
+// Lit toutes les sessions + tous les dossiers
+// Génère les onglets et pages automatiquement
+// ═══════════════════════════════════════════════════════
 
-// Champ Session dans Dossiers Apprentis = fldEg6m9OTCN6mCVT (multipleRecordLinks)
+const AT2_PAT     = 'patGfdRWpbwsnb3Gu.b43f490cd943925747c24e80c4b65281f2b59781b2ae1e3fe5bac00e4609ad21';
+const AT2_BASE    = 'appQjS0otb8VrzUxN';
+const AT2_HEADERS = { 'Authorization': 'Bearer ' + AT2_PAT };
 
+// Charger toutes les sessions depuis tbl9wSzQNKDMtKybL
+async function fetchSessions() {
+  const url = 'https://api.airtable.com/v0/' + AT2_BASE + '/tbl9wSzQNKDMtKybL'
+    + '?pageSize=100'
+    + '&fields[]=Session%20de%20formation'
+    + '&fields[]=INTITULE_FORMATION'
+    + '&fields[]=Statut'
+    + '&fields[]=Date%20d%C3%A9but'
+    + '&fields[]=Date%20fin'
+    + '&sort[0][field]=Session%20de%20formation&sort[0][direction]=asc';
+  const res = await fetch(url, { headers: AT2_HEADERS });
+  const json = await res.json();
+  return json.records || [];
+}
+
+// Charger tous les dossiers avec leur session
 async function fetchDossiers() {
   let records = [], offset = null;
   do {
-    let url = 'https://api.airtable.com/v0/' + AT2_BASE + '/' + AT2_TABLE
+    let url = 'https://api.airtable.com/v0/' + AT2_BASE + '/tblt5Ey4PNiEpdpNb'
       + '?pageSize=100'
       + '&fields[]=Nom'
       + '&fields[]=Pr%C3%A9nom'
@@ -1091,91 +1010,128 @@ function initiales(nom, prenom) {
 function statutBadge(s) {
   if (!s) return '<span class="badge" style="background:#f3f4f6;color:#6b7280;">-</span>';
   const sl = s.toLowerCase();
-  if (sl.includes('cours') || sl.includes('reçu') || sl.includes('actif'))
+  if (sl.includes('cours') || sl.includes('recu') || sl.includes('actif'))
     return '<span class="badge badge-active">' + s + '</span>';
-  if (sl.includes('prépara') || sl.includes('attente'))
+  if (sl.includes('prepara') || sl.includes('attente'))
     return '<span class="badge badge-warning">' + s + '</span>';
   return '<span class="badge" style="background:#f3f4f6;color:#374151;">' + s + '</span>';
 }
 
-async function chargerMSADS() {
-  const tbody = document.getElementById('tbody-stagiaires');
-  const titreEl = document.getElementById('titre-stagiaires');
-  if (!tbody) return;
-  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);">⏳ Chargement…</td></tr>';
+function formatDate(iso) {
+  if (!iso) return '';
+  const [y,m,d] = iso.split('-');
+  return d + '/' + m + '/' + y;
+}
+
+async function initialiserSessions() {
   try {
-    const records = await fetchDossiers();
-    const liste = records.filter(r => getSessionIds(r).includes(SESSION_MSADS));
-    tbody.innerHTML = '';
-    if (liste.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);">Aucun stagiaire MSADS</td></tr>';
-    } else {
-      liste.forEach(r => {
-        const f = r.fields;
-        const nom = (f['Nom'] || '').toUpperCase();
-        const prenom = f['Prénom'] || '';
-        const statut = f['Statut dossier'] || '-';
-        const ini = initiales(nom, prenom);
-        const tr = document.createElement('tr');
-        tr.innerHTML = '<td><span class="initial-circle">' + ini + '</span>' + nom + ' ' + prenom + '</td>'
-          + '<td>08/06/2026</td><td>MSADS · Niveau 4</td><td>' + statutBadge(statut) + '</td>'
-          + '<td style="font-family:DM Mono,monospace;font-size:12px;color:var(--gris-text)">0 / 13</td>';
-        tbody.appendChild(tr);
-      });
-    }
-    document.getElementById('msads-stagiaires').textContent = liste.length;
-    if (titreEl) titreEl.textContent = 'Stagiaires MSADS - ' + liste.length + ' enregistré(s)';
+    const [sessions, dossiers] = await Promise.all([fetchSessions(), fetchDossiers()]);
+
+    const navContainer = document.getElementById('nav-sessions');
+    const pagesContainer = document.getElementById('pages-sessions-container');
+    if (!navContainer || !pagesContainer) return;
+
+    navContainer.innerHTML = '';
+    pagesContainer.innerHTML = '';
+
+    sessions.forEach((session, idx) => {
+      const f = session.fields;
+      const sessionLabel = f['Session de formation'] || ('Session ' + String(idx+1).padStart(2,'0'));
+      const intitule = f['INTITULE_FORMATION'] || sessionLabel;
+      const statut = f['Statut'] || '';
+      const dateDebut = formatDate(f['Date debut'] || f['Date d\u00e9but'] || '');
+      const dateFin = formatDate(f['Date fin'] || '');
+      const pageId = 'session-' + session.id;
+
+      // Stagiaires de cette session
+      const stagiaires = dossiers.filter(d => getSessionIds(d).includes(session.id));
+      const nb = stagiaires.length;
+
+      // Badge statut
+      const badgeClass = statut.toLowerCase().includes('cours') ? 'badge-active' : 'badge-warning';
+      const badgeLabel = statut || 'En preparation';
+
+      // Onglet nav
+      const navEl = document.createElement('div');
+      navEl.className = 'nav-item';
+      navEl.setAttribute('onclick', "showPage('" + pageId + "',this)");
+      navEl.textContent = sessionLabel;
+      navContainer.appendChild(navEl);
+
+      // Page
+      const pageEl = document.createElement('div');
+      pageEl.id = 'page-' + pageId;
+      pageEl.className = 'page';
+
+      let tbodyHtml = '';
+      if (stagiaires.length === 0) {
+        tbodyHtml = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--gris-text);font-size:13px;">Aucun stagiaire enregistre</td></tr>';
+      } else {
+        stagiaires.forEach(d => {
+          const df = d.fields;
+          const nom = (df['Nom'] || '').toUpperCase();
+          const prenom = df['Prénom'] || df['Prenom'] || '';
+          const statDossier = df['Statut dossier'] || '-';
+          const ini = initiales(nom, prenom);
+          tbodyHtml += '<tr>'
+            + '<td><span class="initial-circle">' + ini + '</span>' + nom + ' ' + prenom + '</td>'
+            + '<td>' + (dateDebut || '-') + '</td>'
+            + '<td>' + statutBadge(statDossier) + '</td>'
+            + '<td><a href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/' + d.id + '" target="_blank" style="font-size:12px;color:var(--bleu);">Voir →</a></td>'
+            + '</tr>';
+        });
+      }
+
+      pageEl.innerHTML = '<div class="main">'
+        + '<div class="page-header">'
+        + '<div>'
+        + '<p style="font-size:12px;color:var(--gris-text);margin-bottom:3px;">' + sessionLabel + '</p>'
+        + '<h2>' + intitule + '</h2>'
+        + (dateDebut ? '<p>' + dateDebut + (dateFin ? ' → ' + dateFin : '') + '</p>' : '')
+        + '</div>'
+        + '<span class="badge ' + badgeClass + '" style="font-size:12px;padding:6px 14px;">' + badgeLabel + '</span>'
+        + '</div>'
+        + '<div class="stats">'
+        + '<div class="stat"><div class="stat-val">' + nb + '</div><div class="stat-label">Stagiaires</div></div>'
+        + '</div>'
+        + '<div class="section-title">Outils de la session</div>'
+        + '<div class="tools-grid">'
+        + '<a class="tool-card" href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb" target="_blank"><div class="tool-icon ic-at">🗄</div><div><div class="tool-name">Airtable Dossiers</div><div class="tool-sub">appQjS0otb8VrzUxN</div></div></a>'
+        + '<a class="tool-card" href="https://eu1.make.com/527553/scenarios?folder=all&tab=all" target="_blank"><div class="tool-icon ic-make">⚙️</div><div><div class="tool-name">Make</div><div class="tool-sub">Automatisations</div></div></a>'
+        + '<a class="tool-card" href="https://drive.google.com/drive/u/4/my-drive" target="_blank"><div class="tool-icon ic-drive">📁</div><div><div class="tool-name">Drive</div><div class="tool-sub">Documents stagiaires</div></div></a>'
+        + '<a class="tool-card" href="https://mail.google.com/mail/u/0/#inbox" target="_blank"><div class="tool-icon ic-gmail">✉️</div><div><div class="tool-name">Gmail</div><div class="tool-sub">contact@3aim.fr</div></div></a>'
+        + '</div>'
+        + '<hr>'
+        + '<div class="section-title">Stagiaires ' + sessionLabel + ' - ' + nb + ' enregistre(s)</div>'
+        + '<table class="stagiaires-table">'
+        + '<thead><tr><th>Nom prenom</th><th>Demarrage</th><th>Statut</th><th>Dossier</th></tr></thead>'
+        + '<tbody>' + tbodyHtml + '</tbody>'
+        + '</table>'
+        + '</div>';
+
+      pagesContainer.appendChild(pageEl);
+    });
+
+    // Mettre a jour stat accueil
+    document.getElementById('stat-apprenants').textContent = dossiers.length;
+    document.getElementById('stat-sessions').textContent = sessions.length;
+
   } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:#dc2626;">⚠️ ' + e.message + '</td></tr>';
+    console.error('Erreur initialiserSessions:', e.message);
   }
 }
 
-async function chargerCIP() {
-  const tbody = document.getElementById('tbody-stagiaires-cip');
-  if (!tbody) return;
-  tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gris-text);">⏳ Chargement…</td></tr>';
-  try {
-    const records = await fetchDossiers();
-    const liste = records.filter(r => getSessionIds(r).includes(SESSION_CIP));
-    tbody.innerHTML = '';
-    if (liste.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--gris-text);">Aucun stagiaire CIP enregistré</td></tr>';
-    } else {
-      liste.forEach(r => {
-        const f = r.fields;
-        const nom = (f['Nom'] || '').toUpperCase();
-        const prenom = f['Prénom'] || '';
-        const statut = f['Statut dossier'] || '-';
-        const ini = initiales(nom, prenom);
-        const tr = document.createElement('tr');
-        tr.innerHTML = '<td><span class="initial-circle">' + ini + '</span>' + nom + ' ' + prenom + '</td>'
-          + '<td>10/08/2026</td><td>' + statutBadge(statut) + '</td>'
-          + '<td><a href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/' + r.id + '" target="_blank" style="font-size:12px;color:var(--bleu);">Voir →</a></td>';
-        tbody.appendChild(tr);
-      });
-    }
-    document.getElementById('cip-stagiaires').textContent = liste.length;
-    const titresCIP = document.querySelectorAll('#page-cip .section-title');
-    titresCIP.forEach(el => { if (el.textContent.includes('Stagiaires')) el.textContent = 'Stagiaires CIP - ' + liste.length + ' enregistré(s)'; });
-  } catch(e) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:#dc2626;">⚠️ ' + e.message + '</td></tr>';
-  }
-}
-
-let stagLoaded = false, msadsLoaded = false, cipLoaded = false;
+let stagLoaded = false;
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', function() {
     if (this.textContent.includes('Stagiaires') && !stagLoaded) { stagLoaded = true; chargerStagiaires(); }
-    if (this.textContent.includes('MSADS') && !msadsLoaded) { msadsLoaded = true; chargerMSADS(); }
-    if (this.textContent.includes('CIP') && !cipLoaded) { cipLoaded = true; chargerCIP(); }
   });
 });
 
 // ── Init ──
 appliquerDonnees(chargerDonnees());
 syncDepuisSheets();
-chargerMSADS();
-chargerCIP();
+initialiserSessions();
 </script>
 </body>
 </html>
