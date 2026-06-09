@@ -1081,6 +1081,124 @@ document.querySelectorAll('.nav-item').forEach(item => {
 // ── Init ──
 appliquerDonnees(chargerDonnees());
 syncDepuisSheets();
+// ═══════════════════════════════════════════════════════
+// MSADS & CIP - Airtable live
+// ═══════════════════════════════════════════════════════
+
+const AT2_PAT     = 'patGfdRWpbwsnb3Gu.b43f490cd943925747c24e80c4b65281f2b59781b2ae1e3fe5bac00e4609ad21';
+const AT2_BASE    = 'appQjS0otb8VrzUxN';
+const AT2_TABLE   = 'tblt5Ey4PNiEpdpNb';
+const AT2_HEADERS = { 'Authorization': 'Bearer ' + AT2_PAT };
+
+// IDs des sessions
+const SESSION_MSADS = 'recRfcQIkKBRYq8q5';
+const SESSION_CIP   = 'rec29Qg4T8XeBvazh';
+
+// Champ Session dans Dossiers Apprentis = fldEg6m9OTCN6mCVT (multipleRecordLinks)
+
+async function fetchDossiers() {
+  let records = [], offset = null;
+  do {
+    let url = 'https://api.airtable.com/v0/' + AT2_BASE + '/' + AT2_TABLE
+      + '?pageSize=100'
+      + '&fields[]=Nom'
+      + '&fields[]=Pr%C3%A9nom'
+      + '&fields[]=Statut%20dossier'
+      + '&fields[]=Session';
+    if (offset) url += '&offset=' + offset;
+    const res = await fetch(url, { headers: AT2_HEADERS });
+    const json = await res.json();
+    records = records.concat(json.records || []);
+    offset = json.offset;
+  } while (offset);
+  return records;
+}
+
+function getSessionIds(record) {
+  const val = record.fields['Session'];
+  if (!val) return [];
+  if (Array.isArray(val)) return val.map(v => typeof v === 'object' ? v.id || v : v);
+  return [val];
+}
+
+function initiales(nom, prenom) {
+  return ((nom||'').charAt(0) + (prenom||'').charAt(0)).toUpperCase();
+}
+
+function statutBadge(s) {
+  if (!s) return '<span class="badge" style="background:#f3f4f6;color:#6b7280;">-</span>';
+  const sl = s.toLowerCase();
+  if (sl.includes('cours') || sl.includes('reçu') || sl.includes('actif'))
+    return '<span class="badge badge-active">' + s + '</span>';
+  if (sl.includes('prépara') || sl.includes('attente'))
+    return '<span class="badge badge-warning">' + s + '</span>';
+  return '<span class="badge" style="background:#f3f4f6;color:#374151;">' + s + '</span>';
+}
+
+async function chargerMSADS() {
+  const tbody = document.getElementById('tbody-stagiaires');
+  const titreEl = document.getElementById('titre-stagiaires');
+  if (!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);">⏳ Chargement…</td></tr>';
+  try {
+    const records = await fetchDossiers();
+    const liste = records.filter(r => getSessionIds(r).includes(SESSION_MSADS));
+    tbody.innerHTML = '';
+    if (liste.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gris-text);">Aucun stagiaire MSADS</td></tr>';
+    } else {
+      liste.forEach(r => {
+        const f = r.fields;
+        const nom = (f['Nom'] || '').toUpperCase();
+        const prenom = f['Prénom'] || '';
+        const statut = f['Statut dossier'] || '-';
+        const ini = initiales(nom, prenom);
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td><span class="initial-circle">' + ini + '</span>' + nom + ' ' + prenom + '</td>'
+          + '<td>08/06/2026</td><td>MSADS · Niveau 4</td><td>' + statutBadge(statut) + '</td>'
+          + '<td style="font-family:DM Mono,monospace;font-size:12px;color:var(--gris-text)">0 / 13</td>';
+        tbody.appendChild(tr);
+      });
+    }
+    document.getElementById('msads-stagiaires').textContent = liste.length;
+    if (titreEl) titreEl.textContent = 'Stagiaires MSADS - ' + liste.length + ' enregistré(s)';
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:#dc2626;">⚠️ ' + e.message + '</td></tr>';
+  }
+}
+
+async function chargerCIP() {
+  const tbody = document.getElementById('tbody-stagiaires-cip');
+  if (!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gris-text);">⏳ Chargement…</td></tr>';
+  try {
+    const records = await fetchDossiers();
+    const liste = records.filter(r => getSessionIds(r).includes(SESSION_CIP));
+    tbody.innerHTML = '';
+    if (liste.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--gris-text);">Aucun stagiaire CIP enregistré</td></tr>';
+    } else {
+      liste.forEach(r => {
+        const f = r.fields;
+        const nom = (f['Nom'] || '').toUpperCase();
+        const prenom = f['Prénom'] || '';
+        const statut = f['Statut dossier'] || '-';
+        const ini = initiales(nom, prenom);
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td><span class="initial-circle">' + ini + '</span>' + nom + ' ' + prenom + '</td>'
+          + '<td>10/08/2026</td><td>' + statutBadge(statut) + '</td>'
+          + '<td><a href="https://airtable.com/appQjS0otb8VrzUxN/tblt5Ey4PNiEpdpNb/' + r.id + '" target="_blank" style="font-size:12px;color:var(--bleu);">Voir →</a></td>';
+        tbody.appendChild(tr);
+      });
+    }
+    document.getElementById('cip-stagiaires').textContent = liste.length;
+    const titresCIP = document.querySelectorAll('#page-cip .section-title');
+    titresCIP.forEach(el => { if (el.textContent.includes('Stagiaires')) el.textContent = 'Stagiaires CIP - ' + liste.length + ' enregistré(s)'; });
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:#dc2626;">⚠️ ' + e.message + '</td></tr>';
+  }
+}
+
 chargerMSADS();
 chargerCIP();
 chargerTitresSessions();
